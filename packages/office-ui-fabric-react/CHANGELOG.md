@@ -1,6 +1,20 @@
 # Change Log - office-ui-fabric-react
 
-This log was last generated on Wed, 28 Mar 2018 19:26:19 GMT and should not be manually modified.
+This log was last generated on Fri, 30 Mar 2018 17:59:46 GMT and should not be manually modified.
+
+## 5.75.0
+Fri, 30 Mar 2018 17:59:46 GMT
+
+### Minor changes
+
+- OverflowSet: Allow the OverflowSet to not be contained within a FocusZone
+
+### Patches
+
+- DetailsList: link color too close to selected background in high-contrast-white
+- We need to temporarily remove `sideEffects: false` flag from package.json which will disable webpack 4 tree shaking until we can identify a good fix for it to not shake out the scss files.
+- Pickers: fix bug where suggestions wouldn't have correct value selected
+- Updating the split button to close the menu when the primary button is executed.
 
 ## 5.74.0
 Wed, 28 Mar 2018 19:26:19 GMT

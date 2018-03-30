@@ -2,6 +2,20 @@
   "name": "@uifabric/example-app-base",
   "entries": [
     {
+      "version": "5.7.1",
+      "tag": "@uifabric/example-app-base_v5.7.1",
+      "date": "Fri, 30 Mar 2018 17:59:46 GMT",
+      "comments": {
+        "patch": [
+          {
+            "author": "David Zearing <dzearing@microsoft.com>",
+            "commit": "41711f7788981cf4d84495d147d93a74b979113c",
+            "comment": "We need to temporarily remove `sideEffects: false` flag from package.json which will disable w"
+          }
+        ]
+      }
+    },
+    {
       "version": "5.7.0",
       "tag": "@uifabric/example-app-base_v5.7.0",
       "date": "Wed, 28 Mar 2018 19:26:19 GMT",
