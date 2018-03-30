@@ -1,6 +1,14 @@
 # Change Log - @uifabric/experiments
 
-This log was last generated on Wed, 28 Mar 2018 21:50:01 GMT and should not be manually modified.
+This log was last generated on Fri, 30 Mar 2018 04:43:32 GMT and should not be manually modified.
+
+## 5.28.2
+Fri, 30 Mar 2018 04:43:32 GMT
+
+### Patches
+
+- Fix flex styling for SignalField
+- Pass all props to Signal Icon elements
 
 ## 5.28.1
 Wed, 28 Mar 2018 21:50:01 GMT
