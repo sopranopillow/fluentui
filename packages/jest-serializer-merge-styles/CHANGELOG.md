@@ -1,6 +1,13 @@
 # Change Log - @uifabric/jest-serializer-merge-styles
 
-This log was last generated on Tue, 05 Jun 2018 00:44:30 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Jun 2018 19:42:25 GMT and should not be manually modified.
+
+## 6.0.1
+Thu, 14 Jun 2018 19:42:25 GMT
+
+### Patches
+
+- Fix broken documentation links
 
 ## 6.0.0
 Tue, 05 Jun 2018 00:44:30 GMT

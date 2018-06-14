@@ -1,6 +1,13 @@
 # Change Log - @uifabric/variants
 
-This log was last generated on Thu, 07 Jun 2018 16:35:34 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Jun 2018 19:42:25 GMT and should not be manually modified.
+
+## 6.0.4
+Thu, 14 Jun 2018 19:42:25 GMT
+
+### Patches
+
+- Fix broken documentation links
 
 ## 6.0.3
 Thu, 07 Jun 2018 16:35:34 GMT
