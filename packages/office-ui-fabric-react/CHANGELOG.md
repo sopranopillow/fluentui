@@ -1,6 +1,19 @@
 # Change Log - office-ui-fabric-react
 
-This log was last generated on Tue, 26 Jun 2018 10:27:47 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jun 2018 15:01:47 GMT and should not be manually modified.
+
+## 6.21.0
+Wed, 27 Jun 2018 15:01:47 GMT
+
+### Minor changes
+
+- datepicker mergestyles conversion step 1
+- Added as={Component} as a prop to Link
+
+### Patches
+
+- Checkbox: Fix layout bug that causes `overflow`/`text-overflow` in Checkbox label to not take effect (#5224)
+- Fix import paths to use relative paths for office-ui-fabric-react
 
 ## 6.20.0
 Tue, 26 Jun 2018 10:27:47 GMT

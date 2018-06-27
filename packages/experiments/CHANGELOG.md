@@ -1,6 +1,18 @@
 # Change Log - @uifabric/experiments
 
-This log was last generated on Tue, 26 Jun 2018 10:27:47 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jun 2018 15:01:47 GMT and should not be manually modified.
+
+## 6.11.0
+Wed, 27 Jun 2018 15:01:47 GMT
+
+### Minor changes
+
+- fluent style updates per design feedback
+- Revert toggle border-width to pre-Fluent width
+
+### Patches
+
+- CardDidMount callback for making api calls, additional ref incase there is a use case where there is no state, compoundButtonStack  size variation and gridList component v1.1 changes
 
 ## 6.10.1
 Tue, 26 Jun 2018 10:27:47 GMT
