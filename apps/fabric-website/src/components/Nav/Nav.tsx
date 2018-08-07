@@ -3,6 +3,9 @@ import * as React from 'react';
 import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import { IconButton } from 'office-ui-fabric-react/lib/Button';
+import { Callout } from 'office-ui-fabric-react/lib/Callout';
+import { List } from 'office-ui-fabric-react/lib/List';
+import { Link } from 'office-ui-fabric-react/lib/Link';
 import {
   CollapsibleSection,
   CollapsibleSectionTitle,
@@ -20,16 +23,42 @@ export interface INavState {
   searchQuery: string;
   defaultFilterState: boolean;
   filterState: boolean;
+  isCalloutVisible: boolean;
 }
 
+const searchBoxStyles = {
+  root: {
+    marginBottom: '5px',
+    width: '152px',
+    backgroundColor: 'transparent'
+  },
+  iconContainer: {
+    display: 'none'
+  },
+  field: {
+    backgroundColor: 'transparent',
+    color: 'white'
+  },
+  clearButton: {
+    selectors: {
+      '.ms-Button': {
+        color: 'white'
+      }
+    }
+  }
+};
+
 export class Nav extends React.Component<INavProps, INavState> {
+  private _searchBoxElement: HTMLElement | null;
+
   constructor(props: INavProps) {
     super(props);
 
     this.state = {
       searchQuery: '',
       defaultFilterState: true,
-      filterState: true
+      filterState: true,
+      isCalloutVisible: false
     };
   }
 
@@ -117,29 +146,7 @@ export class Nav extends React.Component<INavProps, INavState> {
         : page.pages
           ? this._renderLinkList(page.pages, true)
           : null;
-    const { searchQuery } = this.state;
-    const searchRegEx = new RegExp(searchQuery, 'i');
     const text = page.title;
-    let linkText = <>{text}</>;
-
-    let matchIndex;
-    // Highlight search query within link.
-    if (!!searchQuery && page.isFilterable) {
-      matchIndex = text.toLowerCase().indexOf(searchQuery.toLowerCase());
-      if (matchIndex >= 0) {
-        const before = text.slice(0, matchIndex);
-        const match = text.slice(matchIndex, matchIndex + searchQuery.length);
-        const after = text.slice(matchIndex + searchQuery.length);
-        const highlightMatch = <span className={styles.matchesFilter}>{match}</span>;
-        linkText = (
-          <>
-            {before}
-            {highlightMatch}
-            {after}
-          </>
-        );
-      }
-    }
 
     return (
       <span>
@@ -147,19 +154,18 @@ export class Nav extends React.Component<INavProps, INavState> {
         <li
           className={css(
             styles.link,
-            _isPageActive(page) && searchQuery === '' ? styles.isActive : '',
+            _isPageActive(page) ? styles.isActive : '',
             _hasActiveChild(page) ? styles.hasActiveChild : '',
             page.isHomePage ? styles.isHomePage : '',
             page.className ? styles[page.className] : ''
           )}
           key={linkIndex}
         >
-          {!(page.isUhfLink && location.hostname !== 'localhost') &&
-            (page.isFilterable && searchQuery !== '' ? matchIndex > -1 : true) && (
-              <a href={page.url} onClick={this._onLinkClick} title={title} aria-label={ariaLabel}>
-                {linkText}
-              </a>
-            )}
+          {!(page.isUhfLink && location.hostname !== 'localhost') && (
+            <a href={page.url} onClick={this._onLinkClick} title={title} aria-label={ariaLabel}>
+              {text}
+            </a>
+          )}
           {childLinks}
         </li>
       </span>
@@ -168,58 +174,146 @@ export class Nav extends React.Component<INavProps, INavState> {
 
   private _getSearchBox(val) {
     if (val === 'Components') {
+      const { searchQuery, isCalloutVisible } = this.state;
+
+      const data: INavPage[] = [];
+      this.props.pages
+        .filter(page => page.title === 'Components')
+        .map((page: INavPage) =>
+          page.pages.map((links: INavPage) =>
+            links.pages
+              .filter(link => link.title.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1)
+              .map((link: INavPage) => data.push(link))
+          )
+        );
+      data.sort((l1, l2) => {
+        if (l1.title > l2.title) {
+          return 1;
+        } else if (l1.title < l2.title) {
+          return -1;
+        }
+        return 0;
+      });
+
       return (
-        <div style={{ display: 'flex' }}>
-          <SearchBox
-            placeholder="Filter Components"
-            underlined={true}
-            styles={{
-              root: {
-                marginBottom: '5px',
-                width: '152px',
-                backgroundColor: 'transparent'
-              },
-              iconContainer: {
-                display: 'none'
-              },
-              field: {
-                backgroundColor: 'transparent',
-                color: 'white'
-              },
-              clearButton: {
-                selectors: {
-                  '.ms-Button': {
-                    color: 'white'
+        <span>
+          <div style={{ display: 'flex' }} ref={searchBox => (this._searchBoxElement = searchBox)}>
+            <SearchBox
+              placeholder="Filter Components"
+              underlined={true}
+              styles={searchBoxStyles}
+              onChange={this._onChangeQuery.bind(this)}
+            />
+            <IconButton
+              iconProps={{ iconName: 'filter' }}
+              style={{ color: 'white', marginLeft: '5px' }}
+              menuIconProps={{ iconName: '' }}
+              menuProps={{
+                items: [
+                  {
+                    key: 'categories',
+                    text: 'Categories',
+                    iconProps: { iconName: 'org' },
+                    onClick: this._setCategories.bind(this)
+                  },
+                  {
+                    key: 'alphabetized',
+                    text: 'A to Z',
+                    iconProps: { iconName: 'Ascending' },
+                    onClick: this._setAlphabetized.bind(this)
                   }
-                }
-              }
-            }}
-            onChange={this._onChangeQuery.bind(this)}
-          />
-          <IconButton
-            iconProps={{ iconName: 'filter' }}
-            style={{ color: 'white', marginLeft: '5px' }}
-            menuIconProps={{ iconName: '' }}
-            menuProps={{
-              items: [
-                {
-                  key: 'categories',
-                  text: 'Categories',
-                  iconProps: { iconName: 'org' },
-                  onClick: this._setCategories.bind(this)
-                },
-                {
-                  key: 'alphabetized',
-                  text: 'A to Z',
-                  iconProps: { iconName: 'Ascending' },
-                  onClick: this._setAlphabetized.bind(this)
-                }
-              ]
-            }}
-          />
-        </div>
+                ]
+              }}
+            />
+          </div>
+          {isCalloutVisible ? (
+            <Callout hidden={false} target={this._searchBoxElement} isBeakVisible={false} gapSpace={-2}>
+              <div daata-is-scrollable={true}>
+                <hr />
+                <List
+                  style={{ maxHeight: '500px', maxWidth: '1000px' }}
+                  items={data}
+                  onRenderCell={this._onRenderCell.bind(this)}
+                />
+              </div>
+            </Callout>
+          ) : null}
+        </span>
       );
     }
+  }
+
+  private _onRenderCell(item: INavPage, index: number, isScrolling: boolean) {
+    const { searchQuery } = this.state;
+    const matchIndex = item.title.toLowerCase().indexOf(searchQuery.toLowerCase());
+    const text = item.title;
+    let linkText = <>{text}</>;
+    let overview;
+
+    try {
+      overview = require<string>('!raw-loader!office-ui-fabric-react/src/components/' +
+        text +
+        '/docs/' +
+        text +
+        'Overview.md');
+    } catch (Error) {
+      overview = 'Sorry this is broken :(';
+    }
+
+    overview = overview.substring(0, overview.indexOf('\n') > -1 ? overview.indexOf('\n') : overview.length);
+
+    if (overview.indexOf('<a') > -1) {
+      const beforeLink = overview.indexOf('<a');
+      const afterLink = overview.indexOf('</a>') + 4;
+
+      overview = (
+        <span style={{ display: 'flex' }}>
+          <p>
+            {overview.substring(0, beforeLink)}
+            <a href={overview.substring(overview.indexOf("href='") + 6, overview.indexOf("'>"))}>
+              {overview.substring(overview.indexOf('>') + 1, afterLink - 4)}
+            </a>
+            {overview.substring(afterLink, overview.length)}
+          </p>
+        </span>
+      );
+    }
+
+    if (matchIndex >= 0) {
+      const before = text.slice(0, matchIndex);
+      const match = text.slice(matchIndex, matchIndex + searchQuery.length);
+      const after = text.slice(matchIndex + searchQuery.length);
+      const highlightMatch = <span className={styles.matchesFilter}>{match}</span>;
+      linkText = (
+        <>
+          {before}
+          {highlightMatch}
+          {after}
+        </>
+      );
+    }
+
+    return (
+      <div data-is-focusable={true}>
+        <span style={{ display: 'flex' }}>
+          <div style={{ marginLeft: '4px', width: '150px' }}>
+            <Link style={{ color: 'black', fontSize: '15px', marginLeft: '4px' }} href={item.url}>
+              {linkText}
+            </Link>
+          </div>
+          <div style={{ marginLeft: '10px', width: '500px' }}>{overview}</div>
+          <div style={{ marginLeft: '10px' }}>
+            <p>Coming soon... :)</p>
+            <img
+              src="https://media.giphy.com/media/ule4vhcY1xEKQ/giphy.gif"
+              style={{ width: '120px', height: '120px' }}
+              alt="gif is also broken :("
+            />
+          </div>
+        </span>
+        <hr />
+      </div>
+    );
   }
 
   private _onLinkClick = (ev: React.MouseEvent<{}>) => {
@@ -231,14 +325,20 @@ export class Nav extends React.Component<INavProps, INavState> {
     });
   };
 
+  private _hideCallout() {
+    this.setState({
+      isCalloutVisible: false
+    });
+  }
+
   private _onChangeQuery(newValue): void {
     this.setState({
       searchQuery: newValue,
-      filterState: false
+      isCalloutVisible: true
     });
     if (newValue === '') {
       this.setState({
-        filterState: this.state.defaultFilterState
+        isCalloutVisible: false
       });
     }
   }
