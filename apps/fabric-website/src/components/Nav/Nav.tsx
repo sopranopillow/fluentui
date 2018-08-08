@@ -293,6 +293,16 @@ export class Nav extends React.Component<INavProps, INavState> {
       );
     }
 
+    let example;
+    try {
+      let {
+        ButtonDefaultExample
+      } = require('office-ui-fabric-react/src/components/Button/examples/Button.Default.Example');
+      example = <ButtonDefaultExample />;
+    } catch (error) {
+      example = null;
+    }
+
     return (
       <div data-is-focusable={true}>
         <span style={{ display: 'flex' }}>
@@ -302,13 +312,19 @@ export class Nav extends React.Component<INavProps, INavState> {
             </Link>
           </div>
           <div style={{ marginLeft: '10px', width: '500px' }}>{overview}</div>
-          <div style={{ marginLeft: '10px' }}>
-            <p>Coming soon... :)</p>
-            <img
-              src="https://media.giphy.com/media/ule4vhcY1xEKQ/giphy.gif"
-              style={{ width: '120px', height: '120px' }}
-              alt="gif is also broken :("
-            />
+          <div style={{ marginLeft: '10px', marginRight: '4px' }}>
+            {example ? (
+              example
+            ) : (
+              <span>
+                <p>Coming soon... :)</p>
+                <img
+                  src="https://media.giphy.com/media/ule4vhcY1xEKQ/giphy.gif"
+                  style={{ width: '120px', height: '120px' }}
+                  alt="gif is also broken :("
+                />
+              </span>
+            )}
           </div>
         </span>
         <hr />
