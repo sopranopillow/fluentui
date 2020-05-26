@@ -16,6 +16,11 @@
     "preserveConstEnums": true,
     "esModuleInterop": true,
     "lib": ["es2017"],
-    "types": ["jest", "node"]
-  }
+    "types": ["jest", "node"],
+    "paths": {
+      "@fluentui/react-conformance/lib/*": ["./src/*"],
+      "@fluentui/react-conformance": ["./src"]
+    }
+  },
+  "include": ["src"]
 }
