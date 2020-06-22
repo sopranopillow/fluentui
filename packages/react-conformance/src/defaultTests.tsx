@@ -1,6 +1,7 @@
 import { TestObject, TestingOptions } from './types';
 import { ComponentDoc } from 'react-docgen-typescript';
 import { mount } from 'enzyme';
+import { getComponent } from './utils';
 import * as React from 'react';
 import * as _ from 'lodash';
 import * as path from 'path';
@@ -73,4 +74,42 @@ export const defaultTests: TestObject = {
       expect(displayName).toEqual(fileName);
     });
   },
+
+  /** If it has "as" prop: Renders as functional component or passes as to the next component */
+  'as-renders-fc': (componentInfo: ComponentDoc, testInfo: TestingOptions) => {},
+
+  /** If it has "as" prop: Renders as ReactClass or passes as to the next component */
+  'as-renders-react-class': (componentInfo: ComponentDoc, testInfo: TestingOptions) => {},
+
+  /** If it has "as" prop: If the component does not render any DOM,
+   * ensure it passes the as value to the next component */
+  'as-passes-as-value': (componentInfo: ComponentDoc, testInfo: TestingOptions) => {},
+
+  /** If it has "as" prop: Renders component as HTML tags */
+  'as-renders-html': (componentInfo: ComponentDoc, testInfo: TestingOptions) => {
+    it(`renders component as HTML tags or passes "as" to the next component`, () => {
+      const tags = ['a', 'em', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'p', 'span', 'strong'];
+      const { Component, customMount, requiredProps } = testInfo;
+
+      tags.forEach(tag => {
+        const wrapper = customMount
+          ? customMount(<Component {...requiredProps} as={tag} />)
+          : mount(<Component {...requiredProps} as={tag} />);
+        const component = getComponent(wrapper);
+        try {
+          expect(component.is(tag)).toEqual(true);
+        } catch (err) {
+          expect(component.type()).not.toEqual(Component);
+          expect(component.prop('as')).toEqual(tag);
+        }
+      });
+    });
+  },
+
+  /** If it receives children, make sure it renders them */
+  // 'renders-children': (componentInfo: ComponentDoc, testInfo: TestingOptions) => {
+  //   it(`renders children`, () => {
+  //     const { Component } = testInfo;
+  //   });
+  // },
 };

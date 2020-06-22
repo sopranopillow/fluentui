@@ -8,7 +8,11 @@ export type Tests = keyof typeof defaultTests;
 /**
  * {@docCategory isConformant}
  */
-export interface TestingOptions<TProps = {}> {
+export interface TestingOptions<
+  TProps = {} & {
+    as?: string;
+  }
+> {
   /**
    * Path to component file.
    */
