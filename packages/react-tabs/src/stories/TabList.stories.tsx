@@ -9,6 +9,7 @@ export { Appearance } from './TabListAppearance.stories';
 export { SizeSmall } from './TabListSizeSmall.stories';
 export { SizeMedium } from './TabListSizeMedium.stories';
 export { WithIcon } from './TabListWithIcon.stories';
+export { WithOverflow as TabListWithOverflow } from './TabListWithOverflow.stories';
 
 export default {
   title: 'Components/TabList',

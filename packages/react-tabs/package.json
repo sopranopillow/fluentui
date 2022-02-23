@@ -30,6 +30,8 @@
     "@fluentui/react-conformance-griffel": "9.0.0-beta.3",
     "@fluentui/react-context-selector": "9.0.0-rc.3",
     "@fluentui/scripts": "^1.0.0",
+    "@fluentui/react-button": "9.0.0-rc.1",
+    "@fluentui/react-menu": "9.0.0-rc.1",
     "@types/enzyme": "3.10.3",
     "@types/enzyme-adapter-react-16": "1.0.3",
     "@types/react": "16.9.42",

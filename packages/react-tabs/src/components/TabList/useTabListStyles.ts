@@ -17,7 +17,12 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'nowrap',
+    alignItems: 'center',
     position: 'relative',
+    ...shorthands.overflow('hidden'),
+    minWidth: '0',
+    width: '100%',
   },
   vertical: {
     flexDirection: 'column',
