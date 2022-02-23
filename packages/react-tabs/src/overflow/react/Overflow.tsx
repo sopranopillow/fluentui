@@ -28,7 +28,9 @@ export const Overflow = React.forwardRef((props: OverflowProps, ref) => {
     setGroupVisibility(groupVisibility);
   };
 
-  const { containerRef, registerItem, updateOverflow } = useOverflowContainer(updateItemVisibility);
+  const { containerRef, registerItem, updateOverflow } = useOverflowContainer(updateItemVisibility, {
+    minimumVisible: 1,
+  });
 
   const mergedRef = useMergedRefs(containerRef, ref);
 

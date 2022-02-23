@@ -17,23 +17,21 @@ const useStyles = makeStyles({
 export const WithOverflow = (props: Partial<TabProps>) => {
   const styles = useStyles();
 
-  const tabIds = [...Array(10).keys()].map(i => `tab{i}`);
+  const tabIds = [...Array(10).keys()].map(i => `tab${i}`);
 
   return (
     <div className={styles.root}>
       <Overflow>
         <TabList {...props}>
-          <TabListOverflowMenu itemIds={tabIds} />
           {tabIds.map((tabId, index) => {
             return (
               // eslint-disable-next-line react/jsx-key
-              <OverflowItem id={tabId}>
-                <Tab key={tabId} value={tabId}>
-                  Tab {index}
-                </Tab>
+              <OverflowItem key={tabId} id={tabId}>
+                <Tab value={tabId}>Tab {index}</Tab>
               </OverflowItem>
             );
           })}
+          <TabListOverflowMenu itemIds={tabIds} />
         </TabList>
       </Overflow>
     </div>
