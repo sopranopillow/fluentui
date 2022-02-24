@@ -29,6 +29,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
+    ...shorthands.overflow('auto'),
     ...shorthands.padding('50px', '20px'),
     rowGap: '20px',
     minHeight: '600px', //this helps the page remain at height when vertical tabs are resized
