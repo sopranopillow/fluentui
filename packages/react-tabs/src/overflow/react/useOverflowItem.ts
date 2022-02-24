@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-properties */
 import * as React from 'react';
 import { useOverflowContext } from './overflowContext';
 
@@ -12,6 +11,7 @@ export function useOverflowItem<TElement extends HTMLElement>(
   // TODO should this be another hook or part of this hook
   // const isVisible = useOverflowContext((v) => v.itemVisibility[id]);
 
+  // eslint-disable-next-line no-restricted-properties
   React.useLayoutEffect(() => {
     let deregisterItem: () => void = () => null;
     if (ref.current) {

@@ -20,8 +20,8 @@ import {
   CalendarTodayRegular,
   CalendarWeekStartRegular,
   CalendarWorkWeekRegular,
+  MoreHorizontalRegular,
 } from '@fluentui/react-icons';
-import { SelectTabEventHandler } from '../TabList';
 
 const useStyles = makeStyles({
   root: {
@@ -35,16 +35,24 @@ const useStyles = makeStyles({
   },
   example: {
     ...shorthands.border('2px', 'solid', 'grey'),
-    ...shorthands.padding('10px'),
     ...shorthands.overflow('hidden'),
-    width: '800px',
+  },
+  horizontal: {
+    boxSizing: 'border-box',
     height: 'fit-content',
+    minWidth: '150px',
     resize: 'horizontal',
+    width: '600px',
   },
   vertical: {
+    boxSizing: 'border-box',
+    height: '250px',
+    minHeight: '100px',
     resize: 'vertical',
     width: 'fit-content',
-    height: '350px',
+  },
+  tabText: {
+    whiteSpace: 'nowrap',
   },
 });
 
@@ -106,6 +114,8 @@ const OverflowMenu = (props: OverflowMenuProps) => {
   const itemVisibility = useOverflowContext(ctx => ctx.itemVisibility);
   const overflowTabs = tabs.filter(tab => !itemVisibility[tab.id]);
 
+  const styles = useStyles();
+
   const onItemClick = (tabId: string) => {
     props.onTabSelect?.(tabId);
   };
@@ -117,16 +127,14 @@ const OverflowMenu = (props: OverflowMenuProps) => {
   return (
     <Menu hasIcons>
       <MenuTrigger>
-        <Button appearance="transparent" ref={ref}>
-          ...
-        </Button>
+        <Button appearance="transparent" ref={ref} icon={<MoreHorizontalRegular />} />
       </MenuTrigger>
       <MenuPopover>
         <MenuList>
           {overflowTabs.map(tab => {
             return (
               <MenuItem key={tab.id} icon={tab.icon} onClick={() => onItemClick(tab.id)}>
-                {tab.name}
+                <div className={styles.tabText}>{tab.name}</div>
               </MenuItem>
             );
           })}
@@ -136,55 +144,71 @@ const OverflowMenu = (props: OverflowMenuProps) => {
   );
 };
 
-export const WithOverflow = () => {
+const HorizontalExample = () => {
   const styles = useStyles();
 
   const [selectedTabId, setSelectedTabId] = React.useState<string>('today');
-  const onTabSelect: SelectTabEventHandler = (e, data) => {
-    console.log('selected tab', data.value);
-    setSelectedTabId(data.value as string);
-  };
 
-  const onMenuTabSelect = (tabId: string) => {
-    console.log('selected tab by menu', tabId);
+  const onTabSelect = (tabId: string) => {
     setSelectedTabId(tabId);
   };
 
   return (
+    <div className={mergeClasses(styles.example, styles.horizontal)}>
+      <Overflow minimumVisible={2}>
+        <TabList selectedValue={selectedTabId} onTabSelect={(_, d) => onTabSelect(d.value as string)}>
+          {tabs.map(tab => {
+            return (
+              <OverflowItem key={tab.id} id={tab.id} priority={tab.id === selectedTabId ? 2 : 1}>
+                <Tab value={tab.id} icon={<span>{tab.icon}</span>}>
+                  <div className={styles.tabText}>{tab.name}</div>
+                </Tab>
+              </OverflowItem>
+            );
+          })}
+          <OverflowMenu onTabSelect={onTabSelect} />
+        </TabList>
+      </Overflow>
+    </div>
+  );
+};
+
+const VerticalExample = () => {
+  const styles = useStyles();
+
+  const [selectedTabId, setSelectedTabId] = React.useState<string>('today');
+
+  const onTabSelect = (tabId: string) => {
+    setSelectedTabId(tabId);
+  };
+
+  return (
+    <div className={mergeClasses(styles.example, styles.vertical)}>
+      <Overflow minimumVisible={2} overflowAxis="vertical">
+        <TabList vertical selectedValue={selectedTabId} onTabSelect={(_, d) => onTabSelect(d.value as string)}>
+          {tabs.map(tab => {
+            return (
+              <OverflowItem key={tab.id} id={tab.id} priority={tab.id === selectedTabId ? 2 : 1}>
+                <Tab value={tab.id} icon={<span>{tab.icon}</span>}>
+                  {tab.name}
+                </Tab>
+              </OverflowItem>
+            );
+          })}
+          <OverflowMenu onTabSelect={onTabSelect} />
+        </TabList>
+      </Overflow>
+    </div>
+  );
+};
+
+export const WithOverflow = () => {
+  const styles = useStyles();
+
+  return (
     <div className={styles.root}>
-      <div className={styles.example}>
-        <Overflow minimumVisible={1}>
-          <TabList selectedValue={selectedTabId} onTabSelect={onTabSelect}>
-            {tabs.map(tab => {
-              return (
-                <OverflowItem key={tab.id} id={tab.id} priority={tab.id === selectedTabId ? 7 : undefined}>
-                  <Tab value={tab.id} icon={<span>{tab.icon}</span>}>
-                    {tab.name}
-                    {tab.id === selectedTabId ? 1000 : undefined}
-                  </Tab>
-                </OverflowItem>
-              );
-            })}
-            <OverflowMenu onTabSelect={onMenuTabSelect} />
-          </TabList>
-        </Overflow>
-      </div>
-      <div className={mergeClasses(styles.example, styles.vertical)}>
-        <Overflow minimumVisible={1} overflowAxis="vertical" overflowDirection="start">
-          <TabList vertical>
-            {tabs.map(tab => {
-              return (
-                <OverflowItem key={tab.id} id={tab.id}>
-                  <Tab value={tab.id} icon={<span>{tab.icon}</span>}>
-                    {tab.name}
-                  </Tab>
-                </OverflowItem>
-              );
-            })}
-            <OverflowMenu />
-          </TabList>
-        </Overflow>
-      </div>
+      <HorizontalExample />
+      <VerticalExample />
     </div>
   );
 };

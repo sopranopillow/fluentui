@@ -1,6 +1,5 @@
-/* eslint-disable no-restricted-properties */
-import { useEventCallback } from '@fluentui/react-utilities';
 import * as React from 'react';
+import { useEventCallback } from '@fluentui/react-utilities';
 import {
   ObserveOptions,
   OnUpdateItemVisibility,
@@ -18,6 +17,7 @@ export const useOverflowContainer = (update: OnUpdateOverflow, options: UseOverf
   const updateOverflowItems = useEventCallback(update);
   const [overflowManager] = React.useState<OverflowManager>(() => new OverflowManager(updateOverflowItems));
 
+  // eslint-disable-next-line no-restricted-properties
   React.useLayoutEffect(() => {
     if (!containerRef.current) {
       return;
@@ -54,7 +54,7 @@ export const useOverflowContainer = (update: OnUpdateOverflow, options: UseOverf
   );
 
   const updateOverflow = React.useCallback(() => {
-    overflowManager.forceUpdate();
+    overflowManager.updateOverflow();
   }, [overflowManager]);
 
   return {
