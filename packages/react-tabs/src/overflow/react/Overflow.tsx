@@ -2,13 +2,13 @@ import * as React from 'react';
 import { useMergedRefs } from '@fluentui/react-utilities';
 import { OverflowGroupState, OnUpdateOverflow, OverflowEventPayload } from '../native/overflowManager';
 import { OverflowContext } from './overflowContext';
-import { useOverflowContainer } from './useOverflowContainer';
+import { useOverflowContainer, UseOverflowContainerOptions } from './useOverflowContainer';
 
 export type OverflowChildProps = React.HTMLAttributes<HTMLElement> & {
   ref?: React.Ref<never>;
 };
 
-export type OverflowProps = {
+export type OverflowProps = UseOverflowContainerOptions & {
   children: React.ReactElement;
 };
 
@@ -29,7 +29,7 @@ export const Overflow = React.forwardRef((props: OverflowProps, ref) => {
   };
 
   const { containerRef, registerItem, updateOverflow } = useOverflowContainer(updateItemVisibility, {
-    minimumVisible: 1,
+    ...props,
   });
 
   const mergedRef = useMergedRefs(containerRef, ref);

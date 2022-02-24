@@ -26,6 +26,11 @@ const useStyles = makeStyles({
   },
   vertical: {
     flexDirection: 'column',
+    alignItems: 'flex-start',
+    minWidth: 'unset',
+    width: 'unset',
+    minHeight: '0',
+    height: '100%',
   },
 });
 
