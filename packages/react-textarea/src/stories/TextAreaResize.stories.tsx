@@ -13,28 +13,28 @@ const useStyles = makeStyles({
 
 export const Resize = () => {
   const noneId = useId('textarea-none');
-  const underlineId = useId('textarea-underline');
-  const filledDarkerId = useId('textarea-filleddarker');
-  const filledLighterId = useId('textarea-filledlighter');
+  const verticalId = useId('textarea-vertical');
+  const horizontalId = useId('textarea-horizontal');
+  const bothId = useId('textarea-both');
   const styles = useStyles();
 
   return (
     <div className={styles.container}>
       <div>
         <Label htmlFor={noneId}>TextArea with resize set to "none".</Label>
-        <TextArea id={noneId} appearance="outline" placeholder="Placeholder text" resize="none" />
+        <TextArea id={noneId} placeholder="Placeholder text" resize="none" />
       </div>
       <div>
-        <Label htmlFor={underlineId}>TextArea with Underline appearance.</Label>
-        <TextArea id={underlineId} appearance="underline" placeholder="Placeholder text" resize="vertical" />
+        <Label htmlFor={verticalId}>TextArea with resize set to "vertical".</Label>
+        <TextArea id={verticalId} placeholder="Placeholder text" resize="vertical" />
       </div>
       <div>
-        <Label htmlFor={filledDarkerId}>TextArea with Filled Darker appearance.</Label>
-        <TextArea id={filledDarkerId} appearance="filledDarker" placeholder="Placeholder text" resize="horizontal" />
+        <Label htmlFor={horizontalId}>TextArea with resize set to "horizontal".</Label>
+        <TextArea id={horizontalId} placeholder="Placeholder text" resize="horizontal" />
       </div>
       <div>
-        <Label htmlFor={filledLighterId}>TextArea with Filled Lighter appearance.</Label>
-        <TextArea id={filledLighterId} appearance="filledLighter" placeholder="Placeholder text" resize="both" />
+        <Label htmlFor={bothId}>TextArea with resize set to "both".</Label>
+        <TextArea id={bothId} placeholder="Placeholder text" resize="both" />
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ type TextAreaCommons = {
    *
    * @defaultvalue outline
    */
-  appearance: 'outline' | 'underline' | 'filledDarker' | 'filledLighter';
+  appearance: 'outline' | 'filledDarker' | 'filledLighter';
 };
 
 type TextAreaOnChangeData = {

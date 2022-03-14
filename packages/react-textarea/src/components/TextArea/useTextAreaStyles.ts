@@ -149,32 +149,6 @@ const useRootStyles = makeStyles({
     },
   },
 
-  underline: {
-    backgroundColor: tokens.colorTransparentBackground,
-    ...shorthands.borderRadius(0),
-    ...shorthands.border('0', 'solid', tokens.colorTransparentBackground),
-    ...shorthands.borderBottom(tokens.strokeWidthThin, 'solid', tokens.colorNeutralStrokeAccessible),
-  },
-
-  underlineInteractive: {
-    ':hover': {
-      ...shorthands.borderBottom(tokens.strokeWidthThin, 'solid', tokens.colorNeutralStrokeAccessibleHover),
-    },
-
-    ':active': {
-      ...shorthands.borderBottom(tokens.strokeWidthThin, 'solid', tokens.colorNeutralStrokeAccessiblePressed),
-    },
-
-    ':focus-within': {
-      ...shorthands.borderBottom(tokens.strokeWidthThin, 'solid', tokens.colorCompoundBrandStroke),
-      backgroundColor: tokens.colorNeutralBackground1,
-    },
-
-    ':after': {
-      ...shorthands.borderRadius('0'),
-    },
-  },
-
   outline: {
     backgroundColor: tokens.colorNeutralBackground1,
     ...shorthands.border(tokens.strokeWidthThin, 'solid', tokens.colorNeutralStroke1),
@@ -220,21 +194,21 @@ const useTextAreaStyles = makeStyles({
     },
   },
 
-  noneResize: {
+  none: {
     resize: 'none',
   },
-  bothResize: {
+  both: {
     resize: 'both',
   },
-  horizontalResize: {
+  horizontal: {
     resize: 'horizontal',
   },
-  verticalResize: {
+  vertical: {
     resize: 'vertical',
   },
 
   // The padding style adds both content and regular padding (from design spec), since the handle is not affected
-  // by the changing the padding of the root.
+  // by changing the padding of the root.
   small: {
     height: '40px',
     ...shorthands.padding(
@@ -271,7 +245,9 @@ export const useTextAreaStyles_unstable = (state: TextAreaState): TextAreaState 
     rootStyles[appearance],
     disabled && rootStyles.disabled,
     !disabled && rootStyles.interactive,
-    !disabled && rootStyles[`${appearance}Interactive`],
+    !disabled && appearance === 'outline' && rootStyles.outlineInteractive,
+    !disabled && appearance === 'filledDarker' && rootStyles.filledDarkerInteractive,
+    !disabled && appearance === 'filledLighter' && rootStyles.filledLighterInteractive,
     state.root.className,
   );
 
@@ -280,7 +256,7 @@ export const useTextAreaStyles_unstable = (state: TextAreaState): TextAreaState 
     textAreaElementClassName,
     textAreaStyles.base,
     textAreaStyles[size],
-    textAreaStyles[`${resize}Resize`],
+    textAreaStyles[resize],
     state.textArea.className,
   );
 
