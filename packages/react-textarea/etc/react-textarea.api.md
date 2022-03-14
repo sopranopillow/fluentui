@@ -4,6 +4,40 @@
 
 ```ts
 
+import type { ComponentProps } from '@fluentui/react-utilities';
+import type { ComponentState } from '@fluentui/react-utilities';
+import type { ForwardRefComponent } from '@fluentui/react-utilities';
+import * as React_2 from 'react';
+import type { Slot } from '@fluentui/react-utilities';
+
+// @public
+export const renderTextArea_unstable: (state: TextAreaState) => JSX.Element;
+
+// @public
+export const TextArea: ForwardRefComponent<TextAreaProps>;
+
+// @public (undocumented)
+export const textAreaClassName = "fui-TextArea";
+
+// Warning: (ae-forgotten-export) The symbol "TextAreaCommons" needs to be exported by the entry point index.d.ts
+//
+// @public
+export type TextAreaProps = ComponentProps<TextAreaSlots> & TextAreaCommons;
+
+// @public (undocumented)
+export type TextAreaSlots = {
+    root: Slot<'div'>;
+};
+
+// @public
+export type TextAreaState = ComponentState<TextAreaSlots> & TextAreaCommons;
+
+// @public
+export const useTextArea_unstable: (props: TextAreaProps, ref: React_2.Ref<HTMLElement>) => TextAreaState;
+
+// @public
+export const useTextAreaStyles_unstable: (state: TextAreaState) => TextAreaState;
+
 // (No @packageDocumentation comment for this package)
 
 ```
