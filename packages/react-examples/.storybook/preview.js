@@ -57,9 +57,7 @@ function loadStories() {
   if (packageNamePlaceholder === 'react') {
     // For suite package storybooks, also show the examples of re-exported component packages.
     // preview-loader will replace REACT_ DEPS with the actual list.
-    contexts.push(
-      require.context('../src', true, /(REACT_DEPS|PACKAGE_NAME)\/\w+\/[\w.]+\.(Example|stories)\.(tsx|mdx)$/),
-    );
+    contexts.push(require.context('../src', true, /(REACT_DEPS)\/.*\.(Example|stories)\.(tsx|mdx)$/));
   }
 
   for (const req of contexts) {
