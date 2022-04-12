@@ -1,2 +1,3 @@
 export * from './Avatar';
 export * from './utils/index';
+export * from './AvatarGroup';
