@@ -1055,7 +1055,7 @@ class ComboBoxInternal extends React.Component<IComboBoxInternalProps, IComboBox
 
       // Call onChange after state is updated
       if (onChange) {
-        onChange(submitPendingValueEvent, option, index, undefined);
+        onChange(submitPendingValueEvent, option, index, getPreviewText(option));
       }
     }
     if (this.props.multiSelect && this.state.isOpen) {
@@ -1882,7 +1882,7 @@ class ComboBoxInternal extends React.Component<IComboBoxInternalProps, IComboBox
     const { currentPendingValue, currentPendingValueValidIndex, currentPendingValueValidIndexOnHover } = this.state;
 
     let newPendingIndex: number | undefined = undefined;
-    let newPendingValue: string | undefined = undefined;
+    let newPendingValue: string | undefined = prevState.currentPendingValue;
 
     if (
       currentPendingValueValidIndexOnHover !== prevState.currentPendingValueValidIndexOnHover &&
@@ -2095,6 +2095,7 @@ class ComboBoxInternal extends React.Component<IComboBoxInternalProps, IComboBox
 
         // If we get here and we got either and ALT key
         // or meta key, let the event propagate
+        // eslint-disable-next-line deprecation/deprecation
         if (ev.keyCode === KeyCodes.alt || ev.key === 'Meta' /* && isOpen */) {
           return;
         }
@@ -2336,11 +2337,13 @@ class ComboBoxInternal extends React.Component<IComboBoxInternalProps, IComboBox
   /**
    * Get the aria autocomplete value for the combo box
    * @returns 'inline' if auto-complete automatically dynamic, 'both' if we have a list of possible values to pick from
-   * and can dynamically populate input, and 'none' if auto-complete is not enabled as we can't give user inputs.
+   * and can dynamically populate input, and 'list' if auto-complete is not enabled as selection is the only option.
+   * Ideally, this should be 'none' if auto-complete is not enabled, but there is a known bug in Edge
+   * where the callout may appear over the combo box if this attribute is set to 'none'
    */
   private _getAriaAutoCompleteValue(): 'none' | 'inline' | 'list' | 'both' | undefined {
     const autoComplete = !this.props.disabled && this.props.autoComplete === 'on';
-    return autoComplete ? (this.props.allowFreeform ? 'inline' : 'both') : 'none';
+    return autoComplete ? (this.props.allowFreeform ? 'inline' : 'both') : 'list';
   }
 
   private _isPendingOption(item: IComboBoxOption): boolean {

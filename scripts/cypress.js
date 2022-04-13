@@ -16,41 +16,33 @@ const argv = require('yargs')
   .option('mode', {
     describe: 'Choose a mode to run cypress',
     choices: ['run', 'open'],
-  })
-  .option('package', {
-    describe: 'Unscoped package name to load the deployed storybook for (used by PR runs only)',
-    default: 'react-components',
-    type: 'option',
-    choices: ['react-components', 'react'],
-  })
-  .option('port', {
-    describe: 'Port number storybook is running on (used by local runs only)',
-    default: 3000,
-    type: 'number',
+    default: 'open',
   })
   .demandOption('mode').argv;
 
+const isLocalRun = !process.env.DEPLOYURL;
+
+/** @type {Cypress.ConfigOptions} */
 const baseConfig = {
-  baseUrl: process.env.DEPLOYURL
-    ? `${process.env.DEPLOYURL}/${argv.package}/storybook`
-    : `http://localhost:${argv.port}`,
-  fixturesFolder: path.join(__dirname, 'cypress/fixtures'),
-  integrationFolder: '.',
-  pluginsFile: path.join(__dirname, 'cypress/plugins/index.js'),
+  video: false,
+  testFiles: path.join(process.cwd(), '**/*.e2e.tsx'),
+  componentFolder: process.cwd(),
   retries: {
     runMode: 2,
     openMode: 0,
   },
-  screenshotOnRunFailure: false,
-  // due to https://github.com/cypress-io/cypress/issues/8599 this must point to a path within the package,
-  // not a relative path into scripts
-  supportFile: 'e2e/support.js',
-  testFiles: ['**/e2e/**/*.e2e.ts'],
-  video: false,
+  // Screenshots go under <pkg>/cypress/screenshots and can be useful to look at after failures in
+  // local headless runs (especially if the failure is specific to headless runs)
+  screenshotOnRunFailure: isLocalRun && argv.mode === 'run',
+  integrationFolder: '.',
+  fixturesFolder: path.join(__dirname, 'cypress/fixtures'),
+  supportFile: path.join(__dirname, './cypress/support/index.js'),
+  pluginsFile: path.join(__dirname, './cypress/plugins/index.js'),
 };
 
 const run = () => {
   return cypress.run({
+    testingType: 'component',
     configFile: false,
     config: {
       ...baseConfig,
@@ -60,6 +52,7 @@ const run = () => {
 
 const open = () => {
   cypress.open({
+    testingType: 'component',
     configFile: false,
     config: {
       ...baseConfig,
@@ -75,6 +68,8 @@ if (argv.mode === 'open') {
       if (result.totalFailed) {
         throw new Error(`${result.totalFailed} failing E2E tests`);
       }
+
+      process.exit(0);
     })
     .catch(err => {
       console.error(err);
