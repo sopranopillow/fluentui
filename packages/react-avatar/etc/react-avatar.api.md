@@ -25,10 +25,8 @@ export const avatarClassNames: SlotClassNames<AvatarSlots>;
 export const AvatarGroup: ForwardRefComponent<AvatarGroupProps>;
 
 // @public (undocumented)
-export const avatarGroupClassName = "fui-AvatarGroup";
+export const avatarGroupClassNames: SlotClassNames<AvatarGroupSlots>;
 
-// Warning: (ae-forgotten-export) The symbol "AvatarGroupCommons" needs to be exported by the entry point index.d.ts
-//
 // @public
 export type AvatarGroupProps = ComponentProps<AvatarGroupSlots> & AvatarGroupCommons;
 
