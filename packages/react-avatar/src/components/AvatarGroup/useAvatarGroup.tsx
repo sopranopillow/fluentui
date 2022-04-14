@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { getNativeElementProps } from '@fluentui/react-utilities';
 import type { AvatarGroupProps, AvatarGroupState } from './AvatarGroup.types';
-import { OverflowItem } from '../../overflow/react/OverflowItem';
-import { useOverflowMenu } from '../../overflow/react/useOverflowMenu';
 import { resolveShorthand } from '@fluentui/react-utilities';
-import { useOverflowContext } from '../../overflow/react/overflowContext';
+import { useOverflowContext, useOverflowMenu, OverflowItem } from '@fluentui/react-priority-overflow';
 /**
  * Create the state required to render AvatarGroup.
  *

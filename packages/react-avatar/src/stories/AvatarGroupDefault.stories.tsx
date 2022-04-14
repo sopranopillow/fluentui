@@ -1,18 +1,26 @@
 import * as React from 'react';
-import { AvatarGroup } from '../index';
 import { Avatar } from '../Avatar';
-import { Overflow } from '../overflow/react/Overflow';
 import { makeStyles, shorthands } from '@griffel/react';
-import { OverflowItem } from '../overflow/react/OverflowItem';
+import { OverflowItem, Overflow, DATA_OVERFLOWING } from '@fluentui/react-priority-overflow';
 
 const useStyles = makeStyles({
   container: {
     boxSizing: 'border-box',
     // width: 'fit-content',
-    // display: 'inline-flex',
+    display: 'inline-flex',
     // minWidth: 'fit-content',
     resize: 'horizontal',
     backgroundColor: 'lightblue',
+    ...shorthands.overflow('hidden'),
+  },
+
+  overflowContainer: {
+    ...shorthands.overflow('hidden'),
+    whiteSpace: 'nowrap',
+    [`& > [${DATA_OVERFLOWING}]`]: {
+      display: 'inline-block',
+      visibility: 'hidden',
+    },
   },
 });
 
@@ -40,7 +48,7 @@ export const Default = () => {
     // </AvatarGroup>
     <div className={styles.container}>
       <Overflow>
-        <div>
+        <div className={styles.overflowContainer}>
           {/* <div style={{ display: 'inline-flex' }}> */}
           {people.map((name, k) => (
             <OverflowItem key={k} id={`avatar-${k}`}>
