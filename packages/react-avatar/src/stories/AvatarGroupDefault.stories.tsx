@@ -21,6 +21,7 @@ const useStyles = makeStyles({
   },
 
   overflowContainer: {
+    ...shorthands.padding(0, '10px'),
     display: 'flex',
     ...shorthands.overflow('hidden'),
     whiteSpace: 'nowrap',
@@ -62,9 +63,9 @@ export const Default = () => {
       <Overflow>
         <div className={styles.overflowContainer}>
           {/* <div style={{ display: 'inline-flex' }}> */}
-          {people.map((name, k) => (
-            <OverflowItem key={k} id={`avatar-${k}`}>
-              <Avatar id={`avatar-${k}`} color="colorful" name={name} />
+          {people.map(name => (
+            <OverflowItem key={name} id={`avatar-${name}`}>
+              <Avatar id={`avatar-${name}`} color="colorful" name={name} />
             </OverflowItem>
           ))}
           <OverflowMenu />
