@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { Avatar } from '../Avatar';
 import { makeStyles, shorthands } from '@griffel/react';
-import { OverflowItem, Overflow, DATA_OVERFLOWING } from '@fluentui/react-priority-overflow';
+import {
+  OverflowItem,
+  Overflow,
+  DATA_OVERFLOWING,
+  DATA_OVERFLOW_ITEM,
+  useOverflowMenu,
+} from '@fluentui/react-priority-overflow';
 
 const useStyles = makeStyles({
   container: {
@@ -15,11 +21,17 @@ const useStyles = makeStyles({
   },
 
   overflowContainer: {
+    display: 'flex',
     ...shorthands.overflow('hidden'),
     whiteSpace: 'nowrap',
+    [`& > [${DATA_OVERFLOW_ITEM}]`]: {
+      display: 'inline-block',
+      order: 1,
+    },
     [`& > [${DATA_OVERFLOWING}]`]: {
       display: 'inline-block',
       visibility: 'hidden',
+      order: 1000,
     },
   },
 });
@@ -55,8 +67,23 @@ export const Default = () => {
               <Avatar id={`avatar-${k}`} color="colorful" name={name} />
             </OverflowItem>
           ))}
+          <OverflowMenu />
         </div>
       </Overflow>
     </div>
+  );
+};
+
+const OverflowMenu = () => {
+  const { ref, isOverflowing, overflowCount } = useOverflowMenu<HTMLButtonElement>();
+
+  if (!isOverflowing) {
+    return null;
+  }
+
+  return (
+    <button style={{ order: 1 }} ref={ref}>
+      {overflowCount}
+    </button>
   );
 };
