@@ -10,6 +10,7 @@ export { Pinned } from './Pinned.stories';
 export { Dividers } from './Dividers.stories';
 export { PriorityWithDividers } from './PriorityWithDividers.stories';
 export { Selection } from './Selection.stories';
+export { AvatarStory } from './Avatar.stories';
 
 export default {
   title: 'Overflow',
