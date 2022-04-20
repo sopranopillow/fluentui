@@ -18,38 +18,30 @@ const avatarNames = [
 
 const useStyles = makeStyles({
   container: {
-    backgroundColor: 'lightblue',
-    ...shorthands.overflow('hidden'),
+    // ...shorthands.border('2px', 'solid', 'gray'),
   },
   example: {
     display: 'flex',
     flexDirection: 'column',
     ...shorthands.gap('10px'),
   },
-  avatarList: {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    ...shorthands.overflow('hidden'),
-  },
-  btn: {
-    width: '32px',
-  },
 });
 
-export const Default = (props: Partial<AvatarGroupProps>) => {
+export const Layouts = (props: Partial<AvatarGroupProps>) => {
   const styles = useStyles();
 
   return (
     <div className={styles.example}>
-      {Array(10)
-        .fill(0)
-        .map((_, i) => (
-          <AvatarGroup key={i} className={styles.container}>
-            {avatarNames.slice(0, i + 1).map((n, k) => (
-              <Avatar color="colorful" key={k} name={n} />
-            ))}
-          </AvatarGroup>
+      <AvatarGroup layout="grid" className={styles.container}>
+        {avatarNames.map((n, k) => (
+          <Avatar color="colorful" key={k} name={n} />
         ))}
+      </AvatarGroup>
+      <AvatarGroup layout="stacked" className={styles.container}>
+        {avatarNames.map((n, k) => (
+          <Avatar color="colorful" key={k} name={n} />
+        ))}
+      </AvatarGroup>
     </div>
   );
 };
