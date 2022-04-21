@@ -2,6 +2,7 @@ import type { ComponentProps, ComponentState, Slot } from '@fluentui/react-utili
 import { PopoverSurface } from '@fluentui/react-popover';
 import { AvatarSizes } from '../Avatar/Avatar.types';
 import { Button } from '@fluentui/react-button';
+import { Tooltip } from '@fluentui/react-tooltip';
 
 export type AvatarGroupSlots = {
   root: Slot<'div'>;
@@ -11,7 +12,7 @@ export type AvatarGroupSlots = {
   popoverSurface?: Slot<typeof PopoverSurface>;
 
   //TODO: figure out tooltip once in spec
-  // tooltip?: Slot<Required<Tooltip>>;
+  tooltip?: Slot<typeof Tooltip>;
 };
 
 type AvatarGroupCommons = {

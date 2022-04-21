@@ -48,7 +48,6 @@ export const Sizes = (props: Partial<AvatarGroupProps>) => {
           <AvatarGroup size={size as AvatarSizes} layout="stacked" iconOverflowIndicator>
             {avatarNames.map((n, k) => (
               <Avatar color="colorful" key={k} name={n} />
-              // <Avatar color="colorful" key={k} />
             ))}
           </AvatarGroup>
         </div>

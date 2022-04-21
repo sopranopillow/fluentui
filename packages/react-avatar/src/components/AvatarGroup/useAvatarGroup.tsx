@@ -7,6 +7,7 @@ import { MoreHorizontalRegular } from '@fluentui/react-icons';
 import { Label } from '@fluentui/react-label';
 import { useFluent } from '@fluentui/react-shared-contexts';
 import { getInitials } from '../../utils/getInitials';
+import { Tooltip } from '@fluentui/react-tooltip';
 
 /**
  * Create the state required to render AvatarGroup.
@@ -38,7 +39,7 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
     }
 
     let initials = child.props.initials;
-    // TODO: figure out if this is expensive
+    // TODO: figure out if this is expensive, might be able to remove useFluent since dir doesn't matter for initial
     // showing only first initial if size is less than 40
     if (layout === 'pie' && child.props.name && size < 40) {
       initials = getInitials(child.props.name, dir === 'rtl')[0];
@@ -60,7 +61,7 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
       // is a default content and can be overriden
       return (
         <div className="fui-AvatarGroup__popoverSurfaceItem" key={k}>
-          {React.cloneElement(child, { size: 32 })}
+          {React.cloneElement(child, { size: 24 })}
           <Label size="medium">{child.props.name}</Label>
         </div>
       );
@@ -77,6 +78,7 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
       root: 'div',
       popoverTrigger: Button,
       popoverSurface: PopoverSurface,
+      tooltip: Tooltip,
     },
 
     root: getNativeElementProps('div', {
@@ -100,6 +102,15 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
       required: true,
       defaultProps: {
         children: popoverChildren,
+      },
+    }),
+
+    tooltip: resolveShorthand(props.tooltip, {
+      required: true,
+      defaultProps: {
+        content: `Click to see ${childrenCount - maxAvatarsFinal} more people.`,
+        relationship: 'description',
+        appearance: 'inverted',
       },
     }),
   };

@@ -8,10 +8,14 @@ export const avatarGroupClassNames: SlotClassNames<AvatarGroupSlots> = {
   root: 'fui-AvatarGroup',
   popoverTrigger: 'fui-AvatarGroup__popoverTrigger',
   popoverSurface: 'fui-AvatarGroup__popoverSurface',
+  tooltip: 'fui-AvatarGroup__tooltip',
 };
+
+// TODO: add extra classnames
 
 // TODO: once tokens are added, remove these placeholders
 const spacingTokens = {
+  s: '8px',
   mNudge: '10px',
   m: '12px',
   l: '16px',
@@ -51,12 +55,19 @@ const usePopoverSurfaceStyles = makeStyles({
     minHeight: '80px',
     width: '220px',
     ...shorthands.overflow('auto', 'scroll'),
-    ...shorthands.gap('5px'),
+    ...shorthands.gap(spacingTokens.s),
 
     ['& > .fui-AvatarGroup__popoverSurfaceItem']: {
       display: 'flex',
       alignItems: 'center',
-      ...shorthands.gap('10px'),
+      ...shorthands.gap(spacingTokens.s),
+    },
+
+    ['& > .fui-AvatarGroup__popoverSurfaceItem > .fui-Label']: {
+      lineHeight: '20px',
+      fontSize: '14px',
+      fontWeight: 'regular',
+      fontFamily: 'Segoe UI',
     },
   },
 });
@@ -194,6 +205,7 @@ const useHorizontalDividerStyles = makeStyles({
   },
 });
 
+// TODO: fix pie overlap thing
 const usePopoverTriggerStyles = makeStyles({
   base: {
     minWidth: 0,
@@ -208,6 +220,12 @@ const usePopoverTriggerStyles = makeStyles({
     ...shorthands.borderColor(tokens.colorNeutralStroke1),
     flexShrink: 0,
     boxSizing: 'content-box',
+  },
+  pie: {
+    backgroundColor: 'transparent',
+    ':focus': {
+      backgroundColor: 'transparent',
+    },
   },
   thin: { ...shorthands.borderWidth(tokens.strokeWidthThin) },
   thick: { ...shorthands.borderWidth(tokens.strokeWidthThick) },
@@ -350,10 +368,10 @@ export const useAvatarGroupStyles_unstable = (state: AvatarGroupState): AvatarGr
 
   // Popover Trigger styles
   if (state.popoverTrigger) {
-    const popoverTriggerClassNames = [sizeStyles[size]];
+    const popoverTriggerClassNames = [sizeStyles[size], popoverTriggerStyles.base];
 
-    if (layout !== 'pie') {
-      popoverTriggerClassNames.push(popoverTriggerStyles.base);
+    if (layout === 'pie') {
+      popoverTriggerClassNames.push(popoverTriggerStyles.pie);
     }
 
     if (size < 36) {

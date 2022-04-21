@@ -49,7 +49,7 @@ export const Default = (props: Partial<AvatarGroupProps>) => {
                 <Avatar
                   color="colorful"
                   key={k}
-                  // name={n}
+                  name={n}
                   // image={
                   //   k === 0
                   //     ? {
