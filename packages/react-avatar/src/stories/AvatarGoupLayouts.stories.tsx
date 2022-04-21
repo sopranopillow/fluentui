@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { AvatarGroupProps, Avatar } from '../index';
 import { makeStyles, shorthands } from '@griffel/react';
+import { Label } from '@fluentui/react-label';
 import { AvatarGroup } from '../AvatarGroup';
 
 const avatarNames = [
@@ -14,16 +15,22 @@ const avatarNames = [
   'Robert Tolbert',
   'Kevin Sturgis',
   'Elliot Woodward',
+  'Karin Blair',
+  'Maia Maiewska',
+  'Andre Lawson',
+  'Cecil Folk',
 ];
 
 const useStyles = makeStyles({
-  container: {
-    // ...shorthands.border('2px', 'solid', 'gray'),
-  },
   example: {
     display: 'flex',
     flexDirection: 'column',
-    ...shorthands.gap('10px'),
+    ...shorthands.gap('20px'),
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    ...shorthands.gap('5px'),
   },
 });
 
@@ -32,16 +39,30 @@ export const Layouts = (props: Partial<AvatarGroupProps>) => {
 
   return (
     <div className={styles.example}>
-      <AvatarGroup layout="grid" className={styles.container}>
-        {avatarNames.map((n, k) => (
-          <Avatar color="colorful" key={k} name={n} />
-        ))}
-      </AvatarGroup>
-      <AvatarGroup layout="stacked" className={styles.container}>
-        {avatarNames.map((n, k) => (
-          <Avatar color="colorful" key={k} name={n} />
-        ))}
-      </AvatarGroup>
+      <div className={styles.container}>
+        <Label>AvatarGroup with Grid layout</Label>
+        <AvatarGroup layout="grid">
+          {avatarNames.map((n, k) => (
+            <Avatar color="colorful" key={k} name={n} />
+          ))}
+        </AvatarGroup>
+      </div>
+      <div className={styles.container}>
+        <Label>AvatarGroup with stacked layout</Label>
+        <AvatarGroup layout="stacked">
+          {avatarNames.map((n, k) => (
+            <Avatar color="colorful" key={k} name={n} />
+          ))}
+        </AvatarGroup>
+      </div>
+      <div className={styles.container}>
+        <Label>AvatarGroup with pie layout</Label>
+        <AvatarGroup layout="pie">
+          {avatarNames.map((n, k) => (
+            <Avatar color="colorful" key={k} name={n} />
+          ))}
+        </AvatarGroup>
+      </div>
     </div>
   );
 };

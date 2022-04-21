@@ -5,6 +5,7 @@ import bestPracticesMd from './AvatarGroupBestPractices.md';
 
 export { Default } from './AvatarGroupDefault.stories';
 export { Layouts } from './AvatarGoupLayouts.stories';
+export { Sizes } from './AvatarGroupSizes.stories';
 
 export default {
   title: 'Components/AvatarGroup',
