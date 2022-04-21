@@ -10,11 +10,20 @@ export const avatarGroupClassNames: SlotClassNames<AvatarGroupSlots> = {
   popoverSurface: 'fui-AvatarGroup__popoverSurface',
 };
 
+// TODO: once tokens are added, remove these placeholders
 const spacingTokens = {
   mNudge: '10px',
   m: '12px',
   l: '16px',
   xl: '20px',
+};
+
+const overlapSpacingTokens = {
+  xs: '2px',
+  s: '4px',
+  m: '8px',
+  l: '8px',
+  xl: '16px',
 };
 
 /**
@@ -26,13 +35,21 @@ const useRootStyles = makeStyles({
     boxSizing: 'border-box',
     position: 'relative',
   },
+  icon16: { fontSize: '16px' },
+  icon20: { fontSize: '20px' },
+  icon24: { fontSize: '24px' },
+  icon28: { fontSize: '28px' },
+  icon32: { fontSize: '32px' },
+  icon48: { fontSize: '48px' },
 });
 
 const usePopoverSurfaceStyles = makeStyles({
   base: {
     display: 'flex',
     flexDirection: 'column',
-    maxHeight: '233px',
+    maxHeight: '220px',
+    minHeight: '80px',
+    width: '220px',
     ...shorthands.overflow('auto', 'scroll'),
     ...shorthands.gap('5px'),
 
@@ -52,10 +69,11 @@ const useGridSpacingStyles = makeStyles({
 });
 
 const useStackedSpacingStyles = makeStyles({
-  mNudge: { '& > *:not(:first-child)': { ...shorthands.margin(0, 0, 0, '-' + spacingTokens.mNudge) } },
-  m: { '& > *:not(:first-child)': { ...shorthands.margin(0, 0, 0, '-' + spacingTokens.m) } },
-  l: { '& > *:not(:first-child)': { ...shorthands.margin(0, 0, 0, '-' + spacingTokens.l) } },
-  xl: { '& > *:not(:first-child)': { ...shorthands.margin(0, 0, 0, '-' + spacingTokens.xl) } },
+  xs: { '& > *:not(:first-child)': { ...shorthands.margin(0, 0, 0, '-' + overlapSpacingTokens.xs) } },
+  s: { '& > *:not(:first-child)': { ...shorthands.margin(0, 0, 0, '-' + overlapSpacingTokens.s) } },
+  m: { '& > *:not(:first-child)': { ...shorthands.margin(0, 0, 0, '-' + overlapSpacingTokens.m) } },
+  l: { '& > *:not(:first-child)': { ...shorthands.margin(0, 0, 0, '-' + overlapSpacingTokens.l) } },
+  xl: { '& > *:not(:first-child)': { ...shorthands.margin(0, 0, 0, '-' + overlapSpacingTokens.xl) } },
 });
 
 const useSizeStyles = makeStyles({
@@ -91,19 +109,35 @@ const useFouthPieSizeStyles = makeStyles({
 });
 
 const useHalfPieSizeStyles = makeStyles({
-  20: { '& > .fui-Avatar': { width: '10px', height: '20px', fontSize: tokens.fontSizeBase100 } },
-  24: { '& > .fui-Avatar': { width: '12px', height: '24px', fontSize: tokens.fontSizeBase100 } },
-  28: { '& > .fui-Avatar': { width: '14px', height: '28px', fontSize: tokens.fontSizeBase200 } },
-  32: { '& > .fui-Avatar': { width: '16px', height: '32px', fontSize: tokens.fontSizeBase300 } },
-  36: { '& > .fui-Avatar': { width: '18px', height: '36px', fontSize: tokens.fontSizeBase300 } },
-  40: { '& > .fui-Avatar': { width: '20px', height: '40px', fontSize: tokens.fontSizeBase300 } },
-  48: { '& > .fui-Avatar': { width: '24px', height: '48px', fontSize: tokens.fontSizeBase400 } },
-  56: { '& > .fui-Avatar': { width: '28px', height: '56px', fontSize: tokens.fontSizeBase400 } },
-  64: { '& > .fui-Avatar': { width: '32px', height: '64px', fontSize: tokens.fontSizeBase500 } },
-  72: { '& > .fui-Avatar': { width: '36px', height: '72px', fontSize: tokens.fontSizeBase500 } },
-  96: { '& > .fui-Avatar': { width: '48px', height: '96px', fontSize: tokens.fontSizeBase500 } },
-  120: { '& > .fui-Avatar': { width: '60px', height: '120px', fontSize: tokens.fontSizeBase600 } },
-  128: { '& > .fui-Avatar': { width: '64px', height: '128px', fontSize: tokens.fontSizeBase600 } },
+  20: { '& > .fui-Avatar': { width: '10px', height: '20px' } },
+  24: { '& > .fui-Avatar': { width: '12px', height: '24px' } },
+  28: { '& > .fui-Avatar': { width: '14px', height: '28px' } },
+  32: { '& > .fui-Avatar': { width: '16px', height: '32px' } },
+  36: { '& > .fui-Avatar': { width: '18px', height: '36px' } },
+  40: { '& > .fui-Avatar': { width: '20px', height: '40px' } },
+  48: { '& > .fui-Avatar': { width: '24px', height: '48px' } },
+  56: { '& > .fui-Avatar': { width: '28px', height: '56px' } },
+  64: { '& > .fui-Avatar': { width: '32px', height: '64px' } },
+  72: { '& > .fui-Avatar': { width: '36px', height: '72px' } },
+  96: { '& > .fui-Avatar': { width: '48px', height: '96px' } },
+  120: { '& > .fui-Avatar': { width: '60px', height: '120px' } },
+  128: { '& > .fui-Avatar': { width: '64px', height: '128px' } },
+});
+
+const useFontSizeStyles = makeStyles({
+  20: { '& > *': { fontSize: tokens.fontSizeBase100 } },
+  24: { '& > *': { fontSize: tokens.fontSizeBase100 } },
+  28: { '& > *': { fontSize: tokens.fontSizeBase100 } },
+  32: { '& > *': { fontSize: tokens.fontSizeBase200 } },
+  36: { '& > *': { fontSize: tokens.fontSizeBase300 } },
+  40: { '& > *': { fontSize: tokens.fontSizeBase300 } },
+  48: { '& > *': { fontSize: tokens.fontSizeBase400 } },
+  56: { '& > *': { fontSize: tokens.fontSizeBase400 } },
+  64: { '& > *': { fontSize: tokens.fontSizeBase500 } },
+  72: { '& > *': { fontSize: tokens.fontSizeBase500 } },
+  96: { '& > *': { fontSize: tokens.fontSizeBase500 } },
+  120: { '& > *': { fontSize: tokens.fontSizeBase600 } },
+  128: { '& > *': { fontSize: tokens.fontSizeBase600 } },
 });
 
 const useVerticalDividerStyles = makeStyles({
@@ -164,13 +198,21 @@ const usePopoverTriggerStyles = makeStyles({
   base: {
     minWidth: 0,
     minHeight: 0,
+    maxWidth: 'unset',
+    maxHeight: 'unset',
     ...shorthands.padding(0),
     fontFamily: tokens.fontFamilyBase,
     fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground3,
     backgroundColor: tokens.colorNeutralBackground1,
     ...shorthands.borderColor(tokens.colorNeutralStroke1),
-    color: tokens.colorNeutralForeground3,
+    flexShrink: 0,
+    boxSizing: 'content-box',
   },
+  thin: { ...shorthands.borderWidth(tokens.strokeWidthThin) },
+  thick: { ...shorthands.borderWidth(tokens.strokeWidthThick) },
+  thicker: { ...shorthands.borderWidth(tokens.strokeWidthThicker) },
+  thickest: { ...shorthands.borderWidth(tokens.strokeWidthThickest) },
 });
 
 const usePieLayoutStyles = makeStyles({
@@ -178,13 +220,11 @@ const usePieLayoutStyles = makeStyles({
     clipPath: 'circle(50%)',
     '& > .fui-Avatar': {
       ...shorthands.borderRadius(0),
-      ...shorthands.overflow('hidden'),
     },
   },
   three: {
     '& > .fui-Avatar': {
       position: 'absolute',
-      // ...shorthands.overflow('hidden')
     },
     '& > .fui-Avatar:not(:first-child)': {
       left: 'calc(100% / 2)',
@@ -195,25 +235,26 @@ const usePieLayoutStyles = makeStyles({
   },
 });
 
-const useAvatarBorderStyle = makeStyles({
-  thin: {
-    '& > .fui-Avatar': {
-      ...shorthands.border(tokens.strokeWidthThin, 'solid', tokens.colorNeutralBackground2),
-    },
-  },
+const useStackedAvatarOutlineStyle = makeStyles({
   thick: {
-    '& > .fui-Avatar': {
-      ...shorthands.border(tokens.strokeWidthThick, 'solid', tokens.colorNeutralBackground2),
+    '& > *': {
+      outlineWidth: tokens.strokeWidthThick,
+      outlineStyle: 'solid',
+      outlineColor: tokens.colorNeutralBackground2,
     },
   },
   thicker: {
-    '& > .fui-Avatar': {
-      ...shorthands.border(tokens.strokeWidthThicker, 'solid', tokens.colorNeutralBackground2),
+    '& > *': {
+      outlineWidth: tokens.strokeWidthThicker,
+      outlineStyle: 'solid',
+      outlineColor: tokens.colorNeutralBackground2,
     },
   },
   thickest: {
-    '& > .fui-Avatar': {
-      ...shorthands.border(tokens.strokeWidthThickest, 'solid', tokens.colorNeutralBackground2),
+    '& > *': {
+      outlineWidth: tokens.strokeWidthThickest,
+      outlineStyle: 'solid',
+      outlineColor: tokens.colorNeutralBackground2,
     },
   },
 });
@@ -222,41 +263,57 @@ const useAvatarBorderStyle = makeStyles({
  * Apply styling to the AvatarGroup slots based on the state
  */
 export const useAvatarGroupStyles_unstable = (state: AvatarGroupState): AvatarGroupState => {
-  const { size, layout } = state;
+  const { size, layout, iconOverflowIndicator } = state;
   const rootStyles = useRootStyles();
-  const rootClasses = [rootStyles.base];
+  const popoverTriggerStyles = usePopoverTriggerStyles();
+  const popoverSurfaceStyles = usePopoverSurfaceStyles();
+
   const gridSpacingStyles = useGridSpacingStyles();
   const stackedSpacingStyles = useStackedSpacingStyles();
   const pieLayoutStyles = usePieLayoutStyles();
-  const popoverTriggerStyles = usePopoverTriggerStyles();
-  const sizeStyles = useSizeStyles();
-  const popoverSurfaceStyles = usePopoverSurfaceStyles();
-  const halfPieSizeStyles = useHalfPieSizeStyles();
-  const fouthPieSizeStyles = useFouthPieSizeStyles();
+
   const verticalDividerStyles = useVerticalDividerStyles();
   const horizontalDividerStyles = useHorizontalDividerStyles();
-  const avatarBorderStyle = useAvatarBorderStyle();
+
+  const sizeStyles = useSizeStyles();
+  const fontSizeStyles = useFontSizeStyles();
+  const halfPieSizeStyles = useHalfPieSizeStyles();
+  const fouthPieSizeStyles = useFouthPieSizeStyles();
+
+  const stackedAvatarOutlineStyle = useStackedAvatarOutlineStyle();
+  // TODO: figure out icon size logic, if needed??
+  // const iconSizeStyles = useIconSizeStyles();
 
   // Root styles
-  if (layout === 'grid' || layout === 'stacked') {
+  const rootClasses = [rootStyles.base, fontSizeStyles[size]];
+
+  if (layout === 'grid') {
     if (size <= 28) {
-      rootClasses.push(layout === 'grid' ? gridSpacingStyles.mNudge : stackedSpacingStyles.mNudge);
+      rootClasses.push(gridSpacingStyles.mNudge);
     } else if (size <= 56) {
-      rootClasses.push(layout === 'grid' ? gridSpacingStyles.m : stackedSpacingStyles.m);
+      rootClasses.push(gridSpacingStyles.m);
     } else if (size <= 72) {
-      rootClasses.push(layout === 'grid' ? gridSpacingStyles.l : stackedSpacingStyles.l);
+      rootClasses.push(gridSpacingStyles.l);
     } else {
-      rootClasses.push(layout === 'grid' ? gridSpacingStyles.xl : stackedSpacingStyles.xl);
+      rootClasses.push(gridSpacingStyles.xl);
+    }
+  } else if (layout === 'stacked') {
+    if (size < 24) {
+      rootClasses.push(stackedSpacingStyles.xs);
+    } else if (size < 48) {
+      rootClasses.push(stackedSpacingStyles.s);
+    } else if (size < 96) {
+      rootClasses.push(stackedSpacingStyles.l);
+    } else {
+      rootClasses.push(stackedSpacingStyles.xl);
     }
 
-    if (size < 36) {
-      rootClasses.push(avatarBorderStyle.thin);
-    } else if (size < 56) {
-      rootClasses.push(avatarBorderStyle.thick);
+    if (size < 56) {
+      rootClasses.push(stackedAvatarOutlineStyle.thick);
     } else if (size < 72) {
-      rootClasses.push(avatarBorderStyle.thicker);
+      rootClasses.push(stackedAvatarOutlineStyle.thicker);
     } else {
-      rootClasses.push(avatarBorderStyle.thickest);
+      rootClasses.push(stackedAvatarOutlineStyle.thickest);
     }
   } else {
     const childrenCount = React.Children.count(state.root.children);
@@ -297,6 +354,32 @@ export const useAvatarGroupStyles_unstable = (state: AvatarGroupState): AvatarGr
 
     if (layout !== 'pie') {
       popoverTriggerClassNames.push(popoverTriggerStyles.base);
+    }
+
+    if (size < 36) {
+      popoverTriggerClassNames.push(popoverTriggerStyles.thin);
+    } else if (size < 56) {
+      popoverTriggerClassNames.push(popoverTriggerStyles.thick);
+    } else if (size < 72) {
+      popoverTriggerClassNames.push(popoverTriggerStyles.thicker);
+    } else {
+      popoverTriggerClassNames.push(popoverTriggerStyles.thickest);
+    }
+
+    if (iconOverflowIndicator) {
+      if (size < 28) {
+        popoverTriggerClassNames.push(rootStyles.icon16);
+      } else if (size < 48) {
+        popoverTriggerClassNames.push(rootStyles.icon20);
+      } else if (size < 56) {
+        popoverTriggerClassNames.push(rootStyles.icon24);
+      } else if (size < 64) {
+        popoverTriggerClassNames.push(rootStyles.icon28);
+      } else if (size < 96) {
+        popoverTriggerClassNames.push(rootStyles.icon32);
+      } else {
+        popoverTriggerClassNames.push(rootStyles.icon48);
+      }
     }
 
     state.popoverTrigger.className = mergeClasses(

@@ -13,9 +13,11 @@ export const renderAvatarGroup_unstable = (state: AvatarGroupState) => {
     <slots.root {...slotProps.root}>
       {state.root.children}
       {slots.popoverSurface && slots.popoverTrigger && slotProps.popoverSurface.children && (
-        <Popover>
+        <Popover trapFocus>
           <PopoverTrigger>
+            {/* <slots.tooltip {...slotProps.tooltip}> */}
             <slots.popoverTrigger {...slotProps.popoverTrigger} />
+            {/* </slots.tooltip> */}
           </PopoverTrigger>
           <slots.popoverSurface {...slotProps.popoverSurface} />
         </Popover>

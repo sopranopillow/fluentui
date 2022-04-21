@@ -9,6 +9,9 @@ export type AvatarGroupSlots = {
   popoverTrigger?: Slot<typeof Button>;
 
   popoverSurface?: Slot<typeof PopoverSurface>;
+
+  //TODO: figure out tooltip once in spec
+  // tooltip?: Slot<Required<Tooltip>>;
 };
 
 type AvatarGroupCommons = {
@@ -17,6 +20,8 @@ type AvatarGroupCommons = {
   maxAvatars: number;
 
   size: AvatarSizes;
+
+  iconOverflowIndicator: boolean;
 };
 
 /**

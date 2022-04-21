@@ -49,14 +49,14 @@ export const Default = (props: Partial<AvatarGroupProps>) => {
                 <Avatar
                   color="colorful"
                   key={k}
-                  name={n}
-                  image={
-                    k === 0
-                      ? {
-                          src: 'https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/KatriAthokas.jpg',
-                        }
-                      : {}
-                  }
+                  // name={n}
+                  // image={
+                  //   k === 0
+                  //     ? {
+                  //         src: 'https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/KatriAthokas.jpg',
+                  //       }
+                  //     : {}
+                  // }
                 />
               ))}
             </AvatarGroup>
