@@ -2,16 +2,19 @@ import * as React from 'react';
 import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 import type { AvatarGroupSlots, AvatarGroupState } from './AvatarGroup.types';
 import type { SlotClassNames } from '@fluentui/react-utilities';
-import { tokens } from '../../../../react-theme/src/tokens';
+import { tokens } from '@fluentui/react-theme';
 
 export const avatarGroupClassNames: SlotClassNames<AvatarGroupSlots> = {
   root: 'fui-AvatarGroup',
   popoverTrigger: 'fui-AvatarGroup__popoverTrigger',
   popoverSurface: 'fui-AvatarGroup__popoverSurface',
-  tooltip: 'fui-AvatarGroup__tooltip',
 };
 
 // TODO: add extra classnames
+export const extraAvatarGroupClassNames = {
+  popoverSurfaceItem: 'fui-AvatarGroup__popoverSurfaceItem',
+  iconAvatar: 'fui-AvatarGroup__iconAvatar',
+};
 
 // TODO: once tokens are added, remove these placeholders
 const spacingTokens = {
@@ -30,21 +33,31 @@ const overlapSpacingTokens = {
   xl: '16px',
 };
 
+const iconSizes = {
+  12: '12px',
+  16: '16px',
+  20: '20px',
+  24: '24px',
+  28: '28px',
+  32: '32px',
+  48: '48px',
+};
+
 /**
  * Styles for the root slot
  */
 const useRootStyles = makeStyles({
   base: {
     display: 'inline-flex',
-    boxSizing: 'border-box',
+    // boxSizing: 'border-box',
     position: 'relative',
   },
-  icon16: { fontSize: '16px' },
-  icon20: { fontSize: '20px' },
-  icon24: { fontSize: '24px' },
-  icon28: { fontSize: '28px' },
-  icon32: { fontSize: '32px' },
-  icon48: { fontSize: '48px' },
+  icon16: { fontSize: iconSizes[16] },
+  icon20: { fontSize: iconSizes[20] },
+  icon24: { fontSize: iconSizes[24] },
+  icon28: { fontSize: iconSizes[28] },
+  icon32: { fontSize: iconSizes[32] },
+  icon48: { fontSize: iconSizes[48] },
 });
 
 const usePopoverSurfaceStyles = makeStyles({
@@ -57,13 +70,13 @@ const usePopoverSurfaceStyles = makeStyles({
     ...shorthands.overflow('auto', 'scroll'),
     ...shorthands.gap(spacingTokens.s),
 
-    ['& > .fui-AvatarGroup__popoverSurfaceItem']: {
+    [`& > .${extraAvatarGroupClassNames.popoverSurfaceItem}`]: {
       display: 'flex',
       alignItems: 'center',
       ...shorthands.gap(spacingTokens.s),
     },
 
-    ['& > .fui-AvatarGroup__popoverSurfaceItem > .fui-Label']: {
+    [`& > .${extraAvatarGroupClassNames.popoverSurfaceItem} > .fui-Label`]: {
       lineHeight: '20px',
       fontSize: '14px',
       fontWeight: 'regular',
@@ -103,7 +116,7 @@ const useSizeStyles = makeStyles({
   128: { width: '128px', height: '128px' },
 });
 
-const useFouthPieSizeStyles = makeStyles({
+const useFourthPieSizeStyles = makeStyles({
   20: { '& > .fui-Avatar:not(:first-child)': { width: '10px', height: '10px', fontSize: tokens.fontSizeBase100 } },
   24: { '& > .fui-Avatar:not(:first-child)': { width: '12px', height: '12px', fontSize: tokens.fontSizeBase100 } },
   28: { '& > .fui-Avatar:not(:first-child)': { width: '14px', height: '14px', fontSize: tokens.fontSizeBase100 } },
@@ -117,6 +130,10 @@ const useFouthPieSizeStyles = makeStyles({
   96: { '& > .fui-Avatar:not(:first-child)': { width: '48px', height: '48px', fontSize: tokens.fontSizeBase400 } },
   120: { '& > .fui-Avatar:not(:first-child)': { width: '60px', height: '60px', fontSize: tokens.fontSizeBase500 } },
   128: { '& > .fui-Avatar:not(:first-child)': { width: '64px', height: '64px', fontSize: tokens.fontSizeBase500 } },
+  icon12: { [`& > ${extraAvatarGroupClassNames.iconAvatar}:not(:first-child)`]: { fontSize: iconSizes[12] } },
+  icon16: { [`& > ${extraAvatarGroupClassNames.iconAvatar}:not(:first-child)`]: { fontSize: iconSizes[16] } },
+  icon20: { [`& > ${extraAvatarGroupClassNames.iconAvatar}:not(:first-child)`]: { fontSize: iconSizes[20] } },
+  icon28: { [`& > ${extraAvatarGroupClassNames.iconAvatar}:not(:first-child)`]: { fontSize: iconSizes[28] } },
 });
 
 const useHalfPieSizeStyles = makeStyles({
@@ -133,6 +150,12 @@ const useHalfPieSizeStyles = makeStyles({
   96: { '& > .fui-Avatar': { width: '48px', height: '96px' } },
   120: { '& > .fui-Avatar': { width: '60px', height: '120px' } },
   128: { '& > .fui-Avatar': { width: '64px', height: '128px' } },
+  icon16: { [`& > ${extraAvatarGroupClassNames.iconAvatar}`]: { fontSize: iconSizes[16] } },
+  icon20: { [`& > ${extraAvatarGroupClassNames.iconAvatar}`]: { fontSize: iconSizes[20] } },
+  icon24: { [`& > ${extraAvatarGroupClassNames.iconAvatar}`]: { fontSize: iconSizes[24] } },
+  icon28: { [`& > ${extraAvatarGroupClassNames.iconAvatar}`]: { fontSize: iconSizes[28] } },
+  icon32: { [`& > ${extraAvatarGroupClassNames.iconAvatar}`]: { fontSize: iconSizes[32] } },
+  icon48: { [`& > ${extraAvatarGroupClassNames.iconAvatar}`]: { fontSize: iconSizes[48] } },
 });
 
 const useFontSizeStyles = makeStyles({
@@ -219,10 +242,11 @@ const usePopoverTriggerStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     ...shorthands.borderColor(tokens.colorNeutralStroke1),
     flexShrink: 0,
-    boxSizing: 'content-box',
+    boxSizing: 'border-box',
   },
   pie: {
     backgroundColor: 'transparent',
+    ...shorthands.borderColor('transparent'),
     ':focus': {
       backgroundColor: 'transparent',
     },
@@ -296,11 +320,9 @@ export const useAvatarGroupStyles_unstable = (state: AvatarGroupState): AvatarGr
   const sizeStyles = useSizeStyles();
   const fontSizeStyles = useFontSizeStyles();
   const halfPieSizeStyles = useHalfPieSizeStyles();
-  const fouthPieSizeStyles = useFouthPieSizeStyles();
+  const fourthPieSizeStyles = useFourthPieSizeStyles();
 
   const stackedAvatarOutlineStyle = useStackedAvatarOutlineStyle();
-  // TODO: figure out icon size logic, if needed??
-  // const iconSizeStyles = useIconSizeStyles();
 
   // Root styles
   const rootClasses = [rootStyles.base, fontSizeStyles[size]];
@@ -348,10 +370,25 @@ export const useAvatarGroupStyles_unstable = (state: AvatarGroupState): AvatarGr
       } else {
         rootClasses.push(verticalDividerStyles.thickest);
       }
+
+      if (size < 28) {
+        // TODO: figure out a way to do this more efficient
+        rootClasses.push(halfPieSizeStyles.icon16);
+      } else if (size < 48) {
+        rootClasses.push(halfPieSizeStyles.icon20);
+      } else if (size < 56) {
+        rootClasses.push(halfPieSizeStyles.icon24);
+      } else if (size < 64) {
+        rootClasses.push(halfPieSizeStyles.icon28);
+      } else if (size < 96) {
+        rootClasses.push(halfPieSizeStyles.icon32);
+      } else {
+        rootClasses.push(halfPieSizeStyles.icon48);
+      }
     }
 
     if (childrenCount >= 3) {
-      rootClasses.push(fouthPieSizeStyles[size]);
+      rootClasses.push(fourthPieSizeStyles[size]);
       rootClasses.push(pieLayoutStyles.three);
 
       if (size < 56) {
@@ -360,6 +397,16 @@ export const useAvatarGroupStyles_unstable = (state: AvatarGroupState): AvatarGr
         rootClasses.push(horizontalDividerStyles.thicker);
       } else {
         rootClasses.push(horizontalDividerStyles.thickest);
+      }
+
+      if (size < 36) {
+        rootClasses.push(fourthPieSizeStyles.icon12);
+      } else if (size < 56) {
+        rootClasses.push(fourthPieSizeStyles.icon16);
+      } else if (size < 96) {
+        rootClasses.push(fourthPieSizeStyles.icon20);
+      } else {
+        rootClasses.push(fourthPieSizeStyles.icon28);
       }
     }
   }

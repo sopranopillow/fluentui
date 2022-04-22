@@ -45,9 +45,9 @@ export const Sizes = (props: Partial<AvatarGroupProps>) => {
       {sizes.map((size, i) => (
         <div className={styles.container} key={i}>
           <Label>AvatarGroup with size {size}</Label>
-          <AvatarGroup size={size as AvatarSizes} layout="stacked" iconOverflowIndicator>
+          <AvatarGroup size={size as AvatarSizes} layout="pie">
             {avatarNames.map((n, k) => (
-              <Avatar color="colorful" key={k} name={n} />
+              <Avatar color="colorful" key={k} />
             ))}
           </AvatarGroup>
         </div>

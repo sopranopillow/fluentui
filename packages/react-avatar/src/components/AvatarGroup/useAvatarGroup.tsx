@@ -7,7 +7,8 @@ import { MoreHorizontalRegular } from '@fluentui/react-icons';
 import { Label } from '@fluentui/react-label';
 import { useFluent } from '@fluentui/react-shared-contexts';
 import { getInitials } from '../../utils/getInitials';
-import { Tooltip } from '@fluentui/react-tooltip';
+import { extraAvatarGroupClassNames } from './useAvatarGroupStyles';
+import { avatarGroupDefaultStrings } from './AvatarGroup.strings';
 
 /**
  * Create the state required to render AvatarGroup.
@@ -19,7 +20,15 @@ import { Tooltip } from '@fluentui/react-tooltip';
  * @param ref - reference to root HTMLElement of AvatarGroup
  */
 export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<HTMLElement>): AvatarGroupState => {
-  const { layout = 'grid', maxAvatars = 5, iconOverflowIndicator = false, children, size = 32, ...rest } = props;
+  const {
+    layout = 'grid',
+    maxAvatars = 5,
+    iconOverflowIndicator = false,
+    strings = avatarGroupDefaultStrings,
+    children,
+    size = 32,
+    ...rest
+  } = props;
   const { dir } = useFluent();
   const childrenCount = React.Children.count(children);
   const childrenArr = React.Children.toArray(children);
@@ -45,7 +54,12 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
       initials = getInitials(child.props.name, dir === 'rtl')[0];
     }
 
-    return React.cloneElement(child, { size: size, initials: initials });
+    const iconClassName =
+      child.props.name === undefined || child.props.icon !== undefined
+        ? extraAvatarGroupClassNames.iconAvatar
+        : undefined;
+
+    return React.cloneElement(child, { size: size, initials: initials, className: iconClassName });
   });
 
   let popoverChildren = null;
@@ -60,7 +74,7 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
       // The className is added to add styles but should should not appear in props as this
       // is a default content and can be overriden
       return (
-        <div className="fui-AvatarGroup__popoverSurfaceItem" key={k}>
+        <div className={extraAvatarGroupClassNames.popoverSurfaceItem} key={k}>
           {React.cloneElement(child, { size: 24 })}
           <Label size="medium">{child.props.name}</Label>
         </div>
@@ -73,12 +87,12 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
     maxAvatars,
     size,
     iconOverflowIndicator,
+    tooltipContent: strings?.tooltipLabel.replace('{value}', String(childrenCount - maxAvatarsFinal)),
 
     components: {
       root: 'div',
       popoverTrigger: Button,
       popoverSurface: PopoverSurface,
-      tooltip: Tooltip,
     },
 
     root: getNativeElementProps('div', {
@@ -102,15 +116,6 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
       required: true,
       defaultProps: {
         children: popoverChildren,
-      },
-    }),
-
-    tooltip: resolveShorthand(props.tooltip, {
-      required: true,
-      defaultProps: {
-        content: `Click to see ${childrenCount - maxAvatarsFinal} more people.`,
-        relationship: 'description',
-        appearance: 'inverted',
       },
     }),
   };

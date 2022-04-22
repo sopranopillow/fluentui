@@ -2,7 +2,7 @@ import type { ComponentProps, ComponentState, Slot } from '@fluentui/react-utili
 import { PopoverSurface } from '@fluentui/react-popover';
 import { AvatarSizes } from '../Avatar/Avatar.types';
 import { Button } from '@fluentui/react-button';
-import { Tooltip } from '@fluentui/react-tooltip';
+import { TooltipProps } from '@fluentui/react-tooltip';
 
 export type AvatarGroupSlots = {
   root: Slot<'div'>;
@@ -10,9 +10,6 @@ export type AvatarGroupSlots = {
   popoverTrigger?: Slot<typeof Button>;
 
   popoverSurface?: Slot<typeof PopoverSurface>;
-
-  //TODO: figure out tooltip once in spec
-  tooltip?: Slot<typeof Tooltip>;
 };
 
 type AvatarGroupCommons = {
@@ -23,6 +20,11 @@ type AvatarGroupCommons = {
   size: AvatarSizes;
 
   iconOverflowIndicator: boolean;
+
+  /**
+   * Strings for localizing text in the control.
+   */
+  strings?: AvatarGroupStrings;
 };
 
 /**
@@ -33,4 +35,11 @@ export type AvatarGroupProps = ComponentProps<AvatarGroupSlots> & Partial<Avatar
 /**
  * State used in rendering AvatarGroup
  */
-export type AvatarGroupState = ComponentState<AvatarGroupSlots> & AvatarGroupCommons;
+export type AvatarGroupState = ComponentState<AvatarGroupSlots> &
+  AvatarGroupCommons & {
+    tooltipContent: TooltipProps['content'];
+  };
+
+export type AvatarGroupStrings = {
+  tooltipLabel: string;
+};

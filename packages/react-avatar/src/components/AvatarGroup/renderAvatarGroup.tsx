@@ -2,6 +2,7 @@ import * as React from 'react';
 import { getSlots } from '@fluentui/react-utilities';
 import type { AvatarGroupState, AvatarGroupSlots } from './AvatarGroup.types';
 import { Popover, PopoverTrigger } from '@fluentui/react-popover';
+import { Tooltip } from '@fluentui/react-tooltip';
 
 /**
  * Render the final JSX of AvatarGroup
@@ -15,9 +16,9 @@ export const renderAvatarGroup_unstable = (state: AvatarGroupState) => {
       {slots.popoverSurface && slots.popoverTrigger && slotProps.popoverSurface.children && (
         <Popover trapFocus size="small">
           <PopoverTrigger>
-            <slots.tooltip {...slotProps.tooltip}>
+            <Tooltip content={state.tooltipContent} relationship="description" appearance="inverted">
               <slots.popoverTrigger {...slotProps.popoverTrigger} />
-            </slots.tooltip>
+            </Tooltip>
           </PopoverTrigger>
           <slots.popoverSurface {...slotProps.popoverSurface} />
         </Popover>
