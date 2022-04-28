@@ -19,7 +19,7 @@ type AvatarGroupCommons = {
 
   size: AvatarSizes;
 
-  iconOverflowIndicator: boolean;
+  iconIndicator: boolean;
 
   /**
    * Strings for localizing text in the control.
@@ -38,6 +38,8 @@ export type AvatarGroupProps = ComponentProps<AvatarGroupSlots> & Partial<Avatar
 export type AvatarGroupState = ComponentState<AvatarGroupSlots> &
   AvatarGroupCommons & {
     tooltipContent: TooltipProps['content'];
+
+    renderPopover: boolean;
   };
 
 export type AvatarGroupStrings = {

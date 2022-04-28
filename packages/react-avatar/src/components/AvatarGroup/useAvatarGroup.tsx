@@ -5,10 +5,10 @@ import { PopoverSurface } from '@fluentui/react-popover';
 import { Button } from '@fluentui/react-button';
 import { MoreHorizontalRegular } from '@fluentui/react-icons';
 import { Label } from '@fluentui/react-label';
-import { useFluent } from '@fluentui/react-shared-contexts';
 import { getInitials } from '../../utils/getInitials';
 import { extraAvatarGroupClassNames } from './useAvatarGroupStyles';
 import { avatarGroupDefaultStrings } from './AvatarGroup.strings';
+import { useId } from '@fluentui/react-utilities';
 
 /**
  * Create the state required to render AvatarGroup.
@@ -23,71 +23,70 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
   const {
     layout = 'grid',
     maxAvatars = 5,
-    iconOverflowIndicator = false,
+    iconIndicator = false,
     strings = avatarGroupDefaultStrings,
     children,
     size = 32,
     ...rest
   } = props;
-  const { dir } = useFluent();
   const childrenCount = React.Children.count(children);
   const childrenArr = React.Children.toArray(children);
-
-  // TODO: memoize
-
   // TODO: rename variable
   // NOTE: if the pie layout is selected maxAvatars will be ignored
   const maxAvatarsFinal = layout === 'pie' ? 3 : maxAvatars;
+  const renderPopover = childrenCount > maxAvatarsFinal;
+
+  console.log('rendered AvatarGroup');
+
+  // TODO: memoize
 
   // Splitting children for the avatars that won't appear in the Popover
   let renderedChildren = childrenCount > maxAvatarsFinal ? childrenArr.slice(0, maxAvatarsFinal) : childrenArr;
+
   // Making sure that all the children that won't appear in the Popover are the given size
   renderedChildren = renderedChildren.map(child => {
     if (!React.isValidElement(child)) {
       return child;
     }
+    console.log('renderchildren');
 
     let initials = child.props.initials;
-    // TODO: figure out if this is expensive, might be able to remove useFluent since dir doesn't matter for initial
-    // showing only first initial if size is less than 40
     if (layout === 'pie' && child.props.name && size < 40) {
-      initials = getInitials(child.props.name, dir === 'rtl')[0];
+      initials = getInitials(child.props.name, false)[0];
     }
 
-    const iconClassName =
-      child.props.name === undefined || child.props.icon !== undefined
-        ? extraAvatarGroupClassNames.iconAvatar
-        : undefined;
-
-    return React.cloneElement(child, { size: size, initials: initials, className: iconClassName });
+    return React.cloneElement(child, { size: size, initials: initials });
   });
 
-  let popoverChildren = null;
-  // Getting the Avatars that will be shown in the Popover
-  if (childrenCount > maxAvatarsFinal) {
-    popoverChildren = childrenArr.slice(maxAvatarsFinal, childrenCount).map((child, k) => {
-      if (!React.isValidElement(child)) {
-        return null;
-      }
-      // TODO: memoize, expensive?
-      // The Avatars inside the Popover must be 32
-      // The className is added to add styles but should should not appear in props as this
-      // is a default content and can be overriden
-      return (
-        <div className={extraAvatarGroupClassNames.popoverSurfaceItem} key={k}>
-          {React.cloneElement(child, { size: 24 })}
-          <Label size="medium">{child.props.name}</Label>
-        </div>
-      );
-    });
-  }
+  const popoverChildren = childrenArr.slice(maxAvatarsFinal, childrenCount).map((child, k) => {
+    if (!React.isValidElement(child)) {
+      return null;
+    }
+
+    console.log('popoverchildren');
+
+    // TODO: memoize, expensive?
+    // The Avatars inside the Popover must be 32
+    // The className is added to add styles but should should not appear in props as this
+    // is a default content and can be overriden
+
+    return (
+      <div className={extraAvatarGroupClassNames.popoverSurfaceItem} key={k}>
+        {React.cloneElement(child, { size: 24 })}
+        <Label size="medium">{child.props.name}</Label>
+      </div>
+    );
+  });
+
+  const id = useId('avatarGroup-', props.id);
 
   const state: AvatarGroupState = {
     layout,
     maxAvatars,
     size,
-    iconOverflowIndicator,
+    iconIndicator,
     tooltipContent: strings?.tooltipLabel.replace('{value}', String(childrenCount - maxAvatarsFinal)),
+    renderPopover: renderPopover,
 
     components: {
       root: 'div',
@@ -99,15 +98,16 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
       ref,
       role: 'group',
       children: renderedChildren,
+      id: id,
       ...rest,
     }),
 
     popoverTrigger: resolveShorthand(props.popoverTrigger, {
       required: true,
       defaultProps: {
-        children: layout === 'pie' || iconOverflowIndicator ? null : `+${childrenCount - maxAvatarsFinal}`,
+        children: layout === 'pie' || iconIndicator ? null : `+${childrenCount - maxAvatarsFinal}`,
         shape: 'circular',
-        icon: layout !== 'pie' && iconOverflowIndicator ? <MoreHorizontalRegular /> : undefined,
+        icon: layout !== 'pie' && iconIndicator ? <MoreHorizontalRegular /> : undefined,
         appearance: layout === 'pie' ? 'transparent' : 'outline',
       },
     }),
@@ -116,6 +116,7 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
       required: true,
       defaultProps: {
         children: popoverChildren,
+        'aria-labelledby': id,
       },
     }),
   };
