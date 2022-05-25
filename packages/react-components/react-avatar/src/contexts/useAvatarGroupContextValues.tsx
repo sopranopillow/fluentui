@@ -4,7 +4,6 @@ export const useAvatarGroupContextValues = (state: AvatarGroupState): AvatarGrou
   const { size, layout } = state;
 
   const avatarGroup: AvatarGroupContextValue = {
-    color: 'colorful',
     layout,
     size,
   };

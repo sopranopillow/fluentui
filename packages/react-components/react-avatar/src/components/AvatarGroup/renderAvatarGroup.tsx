@@ -22,7 +22,11 @@ export const renderAvatarGroup_unstable = (state: AvatarGroupState, contextValue
                 <slots.popoverTrigger {...slotProps.popoverTrigger} />
               </Tooltip>
             </PopoverTrigger>
-            <slots.popoverSurface {...slotProps.popoverSurface} />
+            <slots.popoverSurface {...slotProps.popoverSurface}>
+              <AvatarGroupContext.Provider value={{ layout: undefined, overflowItem: true, size: 24 }}>
+                <slots.popoverSurfaceList {...slotProps.popoverSurfaceList} />
+              </AvatarGroupContext.Provider>
+            </slots.popoverSurface>
           </Popover>
         )}
       </slots.root>

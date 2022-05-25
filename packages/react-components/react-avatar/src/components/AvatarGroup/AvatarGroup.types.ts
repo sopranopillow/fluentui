@@ -1,5 +1,4 @@
-import { AvatarProps, AvatarSizes } from '../Avatar/Avatar.types';
-import { Button } from '@fluentui/react-button';
+import { AvatarSizes } from '../Avatar/Avatar.types';
 import { PopoverSurface } from '@fluentui/react-popover';
 import { TooltipProps } from '@fluentui/react-tooltip';
 import type { ComponentProps, ComponentState, Slot } from '@fluentui/react-utilities';
@@ -10,12 +9,14 @@ export type AvatarGroupSlots = {
   /**
    * Popover trigger slot that can be used to change the overflow indicator.
    */
-  popoverTrigger: NonNullable<Slot<typeof Button>>;
+  popoverTrigger: NonNullable<Slot<'button'>>;
 
   /**
    * Popover surface that will be displayed when the popover is triggered.
    */
   popoverSurface: NonNullable<Slot<typeof PopoverSurface>>;
+
+  popoverSurfaceList: NonNullable<Slot<'ul'>>;
 };
 
 /**
@@ -66,7 +67,8 @@ export type AvatarGroupState = ComponentState<AvatarGroupSlots> &
   };
 
 export type AvatarGroupContextValue = Pick<AvatarGroupProps, 'size' | 'layout'> & {
-  color?: AvatarProps['color'];
+  overflowItem?: boolean;
+  currentIndex?: number;
 };
 
 export type AvatarGroupContextValues = {
