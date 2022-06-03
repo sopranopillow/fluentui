@@ -13,6 +13,8 @@ export const avatarGroupClassNames: SlotClassNames<AvatarGroupSlots> = {
   popoverTrigger: 'fui-AvatarGroup__popoverTrigger',
 };
 
+//TODO: popover trigger font sizes are wrong
+
 /**
  * Styles for the root slot.
  */

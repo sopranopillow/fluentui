@@ -1,97 +1,77 @@
 import * as React from 'react';
-import { AvatarGroupItem } from '../index';
+import { AvatarGroupItem, AvatarSizes } from '../index';
 // import { makeStyles, shorthands } from '@griffel/react';
 // import { Label } from '@fluentui/react-label';
 import { AvatarGroup } from '../AvatarGroup';
 // import { Button } from '@fluentui/react-button';
 
-// const avatarNames = [
-//   'Katri Athokas',
-//   'Elvia Atkins',
-//   'Cameron Evans',
-//   'Wanda Howard',
-//   'Mona Kane',
-//   'Allan Munger',
-//   'Daisy Phillips',
-//   'Robert Tolbert',
-//   'Kevin Sturgis',
-//   'Elliot Woodward',
-//   'Karin Blair',
-//   'Maia Maiewska',
-//   'Andre Lawson',
-//   'Cecil Folk',
-// ];
-
-// const useStyles = makeStyles({
-//   example: {
-//     display: 'flex',
-//     flexDirection: 'column',
-//     ...shorthands.gap('20px'),
-//   },
-//   container: {
-//     display: 'flex',
-//     flexDirection: 'column',
-//     ...shorthands.gap('5px'),
-//   },
-// });
+const avatarNames = [
+  'Katri Athokas',
+  'Elvia Atkins',
+  'Cameron Evans',
+  'Wanda Howard',
+  'Mona Kane',
+  'Allan Munger',
+  'Daisy Phillips',
+  'Robert Tolbert',
+  'Kevin Sturgis',
+  'Elliot Woodward',
+  'Karin Blair',
+  'Maia Maiewska',
+  'Andre Lawson',
+  'Cecil Folk',
+];
 
 export const Default = () => {
-  const size = 36;
+  const size = [16, 20, 24, 28, 32, 36, 40, 48, 56, 64, 72, 96, 120, 128];
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'gray' }}>
-        <AvatarGroup size={size} layout="pie">
-          <AvatarGroupItem name="Esteban Munoz" />
-          <AvatarGroupItem name="Elvia Atkins" />
-          <AvatarGroupItem name="Cameron Evans" />
-          <AvatarGroupItem name="Kevin Sturgis" />
-          <AvatarGroupItem name="Kevin Sturgis" />
-          <AvatarGroupItem name="Kevin Sturgis" />
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      {size.map((s, k) => (
+        <AvatarGroup layout="stack" key={k} size={s as AvatarSizes}>
+          {avatarNames.map((name, key) => (
+            <AvatarGroupItem key={key} name={name} />
+          ))}
         </AvatarGroup>
-        <AvatarGroup size={size} layout="stack">
-          <AvatarGroupItem name="Esteban Munoz" />
-          <AvatarGroupItem name="Elvia Atkins" />
-          <AvatarGroupItem name="Cameron Evans" />
-          <AvatarGroupItem name="Kevin Sturgis" />
-          <AvatarGroupItem name="Kevin Sturgis" />
-          <AvatarGroupItem name="Kevin Sturgis" />
-        </AvatarGroup>
-        <AvatarGroup size={size} layout="spread">
-          <AvatarGroupItem name="Esteban Munoz" />
-          <AvatarGroupItem name="Elvia Atkins" />
-          <AvatarGroupItem name="Cameron Evans" />
-          <AvatarGroupItem name="Kevin Sturgis" />
-          <AvatarGroupItem name="Kevin Sturgis" />
-          <AvatarGroupItem name="Kevin Sturgis" />
-        </AvatarGroup>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'gray' }}>
-        <AvatarGroup size={size} layout="pie">
-          <AvatarGroupItem name="Esteban Munoz" />
-          <AvatarGroupItem name="Elvia Atkins" />
-        </AvatarGroup>
-        <AvatarGroup size={size} layout="stack">
-          <AvatarGroupItem name="Esteban Munoz" />
-          <AvatarGroupItem name="Elvia Atkins" />
-        </AvatarGroup>
-        <AvatarGroup size={size} layout="spread">
-          <AvatarGroupItem name="Esteban Munoz" />
-          <AvatarGroupItem name="Elvia Atkins" />
-        </AvatarGroup>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'gray' }}>
-        <AvatarGroup size={size} layout="pie">
-          <AvatarGroupItem name="Elvia Atkins" />
-        </AvatarGroup>
-        <AvatarGroup size={size} layout="stack">
-          <AvatarGroupItem name="Elvia Atkins" />
-        </AvatarGroup>
-        <AvatarGroup size={size} layout="spread">
-          <AvatarGroupItem name="Elvia Atkins" />
-        </AvatarGroup>
-      </div>
+      ))}
     </div>
   );
+  //   return (
+  //     <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+  //       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'gray' }}>
+  //         {Array(avatarNames.length)
+  //           .fill(0)
+  //           .map((n, key) => (
+  //             <AvatarGroup key={key}>
+  //               {avatarNames.slice(0, key).map((child, k) => (
+  //                 <AvatarGroupItem key={k} name={child} />
+  //               ))}
+  //             </AvatarGroup>
+  //           ))}
+  //       </div>
+  //       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'gray' }}>
+  //         {Array(avatarNames.length)
+  //           .fill(0)
+  //           .map((n, key) => (
+  //             <AvatarGroup layout="stack" key={key}>
+  //               {avatarNames.slice(0, key).map((child, k) => (
+  //                 <AvatarGroupItem key={k} name={child} />
+  //               ))}
+  //             </AvatarGroup>
+  //           ))}
+  //       </div>
+  //       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'gray' }}>
+  //         {Array(avatarNames.length)
+  //           .fill(0)
+  //           .map((n, key) => (
+  //             <AvatarGroup layout="pie" key={key}>
+  //               {avatarNames.slice(0, key).map((child, k) => (
+  //                 <AvatarGroupItem key={k} name={child} />
+  //               ))}
+  //             </AvatarGroup>
+  //           ))}
+  //       </div>
+  //     </div>
+  //   );
 };
 
 // export const Default = (props: Partial<AvatarGroupProps>) => {

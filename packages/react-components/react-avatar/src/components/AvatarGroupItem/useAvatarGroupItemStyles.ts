@@ -15,6 +15,8 @@ export const avatarGroupItemClassNames: SlotClassNames<AvatarGroupItemSlots> = {
 export const avatarGroupItemMarginVar = '--fuiAvatarGroupItem--margin';
 export const avatarGroupItemOutlineVar = '--fuiAvatarGroupItem--outline';
 
+//TODO:size 16 and 20 are off center
+
 /**
  * Styles for the root slot
  */
@@ -77,6 +79,7 @@ const useSpreadStyles = makeStyles({
 
 const useAvatarStyles = makeStyles({
   pie: {
+    position: 'absolute',
     ...shorthands.borderRadius(tokens.borderRadiusNone),
   },
 });
