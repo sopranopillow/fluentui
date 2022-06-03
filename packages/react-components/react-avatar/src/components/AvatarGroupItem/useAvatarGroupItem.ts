@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { AvatarNamedColor, useAvatar_unstable } from '../Avatar';
-import { getNativeElementProps, resolveShorthand } from '@fluentui/react-utilities';
-import { Label } from '@fluentui/react-label';
-import { useContextSelector } from '@fluentui/react-context-selector';
+import { Avatar } from '../Avatar';
 import { AvatarGroupContext } from '../../contexts';
+import { getNativeElementProps, resolveShorthand } from '@fluentui/react-utilities';
+import { getInitials } from '../../utils/getInitials';
+import { useContextSelector } from '@fluentui/react-context-selector';
 import type { AvatarGroupItemProps, AvatarGroupItemState } from './AvatarGroupItem.types';
-import { PresenceBadge } from '@fluentui/react-badge';
 
 /**
  * Create the state required to render AvatarGroupItem.
@@ -20,74 +19,42 @@ export const useAvatarGroupItem_unstable = (
   props: AvatarGroupItemProps,
   ref: React.Ref<HTMLElement>,
 ): AvatarGroupItemState => {
-  // const groupLayout = useContextSelector(AvatarGroupContext, ctx => ctx.layout);
-  const groupIndex = useContextSelector(AvatarGroupContext, ctx => ctx.currentIndex);
-  console.log(groupIndex);
-
-  const groupOverflowItem = useContextSelector(AvatarGroupContext, ctx => ctx.overflowItem);
+  const groupIsOverflowItem = useContextSelector(AvatarGroupContext, ctx => ctx.isOverflow);
+  const groupLayout = useContextSelector(AvatarGroupContext, ctx => ctx.layout);
   const groupSize = useContextSelector(AvatarGroupContext, ctx => ctx.size);
+  const rootComponentType = groupIsOverflowItem ? 'li' : 'div';
+  const { style, className, ...primarySlotProps } = props;
 
-  // TODO: update color to use order
-  const { color, name } = props;
-
-  // TODO: verify if mixing up roots messes up everything
-  const avatarState = useAvatar_unstable({ color, size: groupSize, ...props }, ref);
+  const firstInitialOnly = groupSize && groupSize <= 36;
 
   return {
-    ...avatarState,
-    isOverflowItem: groupOverflowItem,
+    isOverflowItem: groupIsOverflowItem,
+    layout: groupLayout,
     components: {
-      avatarGroupItem: 'li',
-      root: 'span',
-      initials: 'span',
-      icon: 'span',
-      image: 'img',
-      badge: PresenceBadge,
-      label: Label,
+      root: 'div',
+      avatar: Avatar,
+      overflowLabel: 'span',
     },
-    avatarGroupItem: getNativeElementProps('li', {
-      role: 'listitem',
-      tabIndex: groupOverflowItem ? 0 : undefined,
-      ...props,
+    root: getNativeElementProps(rootComponentType, {
+      as: rootComponentType,
+      role: groupIsOverflowItem ? 'listitem' : undefined,
+      style,
+      className,
     }),
-    label: resolveShorthand(props.label, {
+    avatar: resolveShorthand(props.avatar, {
       required: true,
       defaultProps: {
-        children: groupOverflowItem ? name : null,
+        size: groupSize,
+        color: 'colorful',
+        initials: firstInitialOnly ? getInitials(props.name, false, { firstInitialOnly: firstInitialOnly }) : undefined,
+        ...primarySlotProps,
+      },
+    }),
+    overflowLabel: resolveShorthand(props.overflowLabel, {
+      required: true,
+      defaultProps: {
+        children: props.name,
       },
     }),
   };
-};
-
-const colorOrder: { [key: number]: AvatarNamedColor } = {
-  1: 'red',
-  2: 'blue',
-  3: 'purple',
-  4: 'forest',
-  5: 'pink',
-  6: 'lavender',
-  7: 'teal',
-  8: 'gold',
-  9: 'cranberry',
-  10: 'cornflower',
-  11: 'lilac',
-  12: 'anchor',
-  13: 'darkGreen',
-  14: 'pumpkin',
-  15: 'darkRed',
-  16: 'mink',
-  17: 'grape',
-  18: 'platinum',
-  19: 'royalBlue',
-  20: 'brown',
-  21: 'peach',
-  22: 'steel',
-  23: 'navy',
-  24: 'seafoam',
-  25: 'magenta',
-  26: 'beige',
-  27: 'lightTeal',
-  28: 'gold',
-  29: 'plum',
-  30: 'marigold',
 };

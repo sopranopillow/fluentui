@@ -23,7 +23,6 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
 
   let rootChildren = childrenArray;
   let popoverChildren = null;
-  let popoverTriggerIcon = undefined;
   let popoverTriggerChildren = null;
 
   if (layout === 'pie') {
@@ -33,8 +32,8 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
     rootChildren = childrenArray.slice(numOfAvatarsToHide);
     popoverChildren = childrenArray.slice(0, numOfAvatarsToHide);
 
-    if (overflowIndicator === 'icon') {
-      popoverTriggerIcon = <MoreHorizontalRegular />;
+    if (overflowIndicator === 'icon' || size < 24) {
+      popoverTriggerChildren = <MoreHorizontalRegular />;
     } else {
       popoverTriggerChildren = `+${numOfAvatarsToHide}`;
     }
@@ -55,6 +54,7 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
     required: true,
     defaultProps: {
       children: popoverTriggerChildren,
+      tabIndex: 1,
     },
   });
 
@@ -67,7 +67,11 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
 
   const popoverSurfaceList = resolveShorthand(props.popoverSurfaceList, {
     required: true,
-    defaultProps: { children: popoverChildren, role: 'list' },
+    defaultProps: {
+      children: popoverChildren,
+      role: 'list',
+      tabIndex: 0,
+    },
   });
 
   return {

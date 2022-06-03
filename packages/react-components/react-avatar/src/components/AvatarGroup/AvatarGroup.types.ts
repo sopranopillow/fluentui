@@ -1,6 +1,6 @@
-import { AvatarSizes } from '../Avatar/Avatar.types';
 import { PopoverSurface } from '@fluentui/react-popover';
 import { TooltipProps } from '@fluentui/react-tooltip';
+import type { AvatarSizes } from '../Avatar/';
 import type { ComponentProps, ComponentState, Slot } from '@fluentui/react-utilities';
 
 export type AvatarGroupSlots = {
@@ -65,12 +65,3 @@ export type AvatarGroupState = ComponentState<AvatarGroupSlots> &
      */
     tooltipContent: TooltipProps['content'];
   };
-
-export type AvatarGroupContextValue = Pick<AvatarGroupProps, 'size' | 'layout'> & {
-  overflowItem?: boolean;
-  currentIndex?: number;
-};
-
-export type AvatarGroupContextValues = {
-  avatarGroup: AvatarGroupContextValue;
-};

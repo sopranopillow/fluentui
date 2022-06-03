@@ -1,2 +1,2 @@
 export * from './AvatarGroupContext';
-export * from './useAvatarGroupContextValues';
+export * from './AvatarGroupItemContext';
