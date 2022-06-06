@@ -14,8 +14,9 @@ export const avatarGroupItemClassNames: SlotClassNames<AvatarGroupItemSlots> = {
 
 export const avatarGroupItemMarginVar = '--fuiAvatarGroupItem--margin';
 export const avatarGroupItemOutlineVar = '--fuiAvatarGroupItem--outline';
+export const avatarGroupItemDividerWidthVar = '--fuiAvatarGroupItem--divierWidth';
 
-//TODO:size 16 and 20 are off center
+// TODO: Clean up overflow item scenario
 
 /**
  * Styles for the root slot
@@ -24,37 +25,48 @@ const useRootStyles = makeStyles({
   base: {
     boxSizing: 'border-box',
     display: 'inline-block',
+    flexShrink: 0,
     position: 'relative',
   },
 });
 
+/**
+ * Styles for the pie layout
+ */
 const usePieStyles = makeStyles({
   base: {
     position: 'absolute',
   },
-  twoPie: {
-    clipPath: 'inset(0 25% 0 25%)',
+  twoPies: {
     ':first-child': {
+      clipPath: `inset(0 calc(25% + (var(${avatarGroupItemDividerWidthVar}) / 2)) 0 25%)`,
       left: '-25%',
     },
     ':nth-child(2)': {
+      clipPath: `inset(0 25% 0 calc(25% + (var(${avatarGroupItemDividerWidthVar}) / 2)))`,
       left: '25%',
     },
   },
-  threePie: {
+  threePies: {
     ':first-child': {
-      clipPath: 'inset(0 25% 0 25%)',
+      clipPath: `inset(0 calc(25% + (var(${avatarGroupItemDividerWidthVar}) / 2)) 0 25%)`,
       left: '-25%',
     },
     ':not(:first-child)': {
-      transform: 'scale(.5)',
-      transformOrigin: '0 0',
+      // Since the two AvatarGroupItems on the right are scaled by 0.5, the divider width should not be halved.
+      clipPath: `inset(0 0 var(${avatarGroupItemDividerWidthVar}) var(${avatarGroupItemDividerWidthVar}))`,
       left: '50%',
+      transform: 'scale(0.5)',
+      transformOrigin: '0 0',
     },
     ':nth-of-type(3)': {
+      clipPath: `inset(var(${avatarGroupItemDividerWidthVar}) 0 0 var(${avatarGroupItemDividerWidthVar}))`,
       top: '50%',
     },
   },
+  thick: { [avatarGroupItemDividerWidthVar]: tokens.strokeWidthThick },
+  thicker: { [avatarGroupItemDividerWidthVar]: tokens.strokeWidthThicker },
+  thickest: { [avatarGroupItemDividerWidthVar]: tokens.strokeWidthThickest },
 });
 
 const useStackStyles = makeStyles({
@@ -78,8 +90,10 @@ const useSpreadStyles = makeStyles({
 });
 
 const useAvatarStyles = makeStyles({
-  pie: {
+  nonOverflow: {
     position: 'absolute',
+  },
+  pie: {
     ...shorthands.borderRadius(tokens.borderRadiusNone),
   },
 });
@@ -99,18 +113,24 @@ export const useAvatarGroupItemStyles_unstable = (state: AvatarGroupItemState): 
   const stackStyles = useStackStyles();
   const spreadStyles = useSpreadStyles();
 
-  const avatarClasses = [];
   const rootClasses = [];
 
   if (!isOverflowItem && size) {
     if (layout === 'pie') {
       rootClasses.push(pieStyles.base);
-      avatarClasses.push(avatarStyles.pie);
+
+      if (size < 56) {
+        rootClasses.push(pieStyles.thick);
+      } else if (size < 72) {
+        rootClasses.push(pieStyles.thicker);
+      } else {
+        rootClasses.push(pieStyles.thickest);
+      }
 
       if (avatarCount && avatarCount === 2) {
-        rootClasses.push(pieStyles.twoPie);
+        rootClasses.push(pieStyles.twoPies);
       } else if (avatarCount === 3) {
-        rootClasses.push(pieStyles.threePie);
+        rootClasses.push(pieStyles.threePies);
       }
     } else if (layout === 'stack') {
       rootClasses.push(stackStyles.base);
@@ -127,7 +147,12 @@ export const useAvatarGroupItemStyles_unstable = (state: AvatarGroupItemState): 
     state.root.className,
   );
 
-  state.avatar.className = mergeClasses(avatarGroupItemClassNames.avatar, ...avatarClasses, state.avatar.className);
+  state.avatar.className = mergeClasses(
+    avatarGroupItemClassNames.avatar,
+    !isOverflowItem && avatarStyles.nonOverflow,
+    !isOverflowItem && layout === 'pie' && avatarStyles.pie,
+    state.avatar.className,
+  );
 
   if (state.overflowLabel) {
     state.overflowLabel.className = mergeClasses(

@@ -1,7 +1,7 @@
 import { createCustomFocusIndicatorStyle } from '@fluentui/react-tabster';
 import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 import { useSizeStyles } from '../Avatar/useAvatarStyles';
-import { tokens } from '@fluentui/react-theme';
+import { tokens, typographyStyles } from '@fluentui/react-theme';
 import { avatarGroupItemMarginVar, avatarGroupItemOutlineVar } from '../AvatarGroupItem';
 import type { AvatarGroupSlots, AvatarGroupState } from './AvatarGroup.types';
 import type { SlotClassNames } from '@fluentui/react-utilities';
@@ -12,8 +12,6 @@ export const avatarGroupClassNames: SlotClassNames<AvatarGroupSlots> = {
   popoverSurfaceList: 'fui-AvatarGroup__popoverSurfaceList',
   popoverTrigger: 'fui-AvatarGroup__popoverTrigger',
 };
-
-//TODO: popover trigger font sizes are wrong
 
 /**
  * Styles for the root slot.
@@ -35,6 +33,7 @@ const usePopoverTriggerStyles = makeStyles({
   base: {
     display: 'inline-flex',
     position: 'relative',
+    flexShrink: 0,
     justifyContent: 'center',
     alignItems: 'center',
     color: tokens.colorNeutralForeground1,
@@ -42,6 +41,7 @@ const usePopoverTriggerStyles = makeStyles({
     ...shorthands.borderColor(tokens.colorNeutralStroke1),
     ...shorthands.borderRadius(tokens.borderRadiusCircular),
     ...shorthands.borderStyle('solid'),
+    ...shorthands.padding(tokens.spacingHorizontalNone),
   },
 
   focusIndicator: createCustomFocusIndicatorStyle({
@@ -90,6 +90,20 @@ const usePopoverTriggerStyles = makeStyles({
   spread: {
     marginLeft: `var(${avatarGroupItemMarginVar})`,
   },
+
+  icon12: { fontSize: '12px' },
+  icon16: { fontSize: '16px' },
+  icon20: { fontSize: '20px' },
+  icon24: { fontSize: '24px' },
+  icon28: { fontSize: '28px' },
+  icon32: { fontSize: '32px' },
+  icon48: { fontSize: '48px' },
+  caption2Strong: { ...typographyStyles.caption2Strong },
+  caption1Strong: { ...typographyStyles.caption1Strong },
+  body1Strong: { ...typographyStyles.body1Strong },
+  subtitle2: { ...typographyStyles.subtitle2 },
+  subtitle1: { ...typographyStyles.subtitle1 },
+  title3: { ...typographyStyles.title3 },
 });
 
 const useStackStyles = makeStyles({
@@ -135,7 +149,7 @@ const usePopoverSurfaceStyles = makeStyles({
  * Apply styling to the AvatarGroup slots based on the state
  */
 export const useAvatarGroupStyles_unstable = (state: AvatarGroupState): AvatarGroupState => {
-  const { layout, size } = state;
+  const { layout, size, overflowIndicator } = state;
 
   const rootStyles = useRootStyles();
   const sizeStyles = useSizeStyles();
@@ -202,11 +216,46 @@ export const useAvatarGroupStyles_unstable = (state: AvatarGroupState): AvatarGr
     );
   }
 
+  const popoverTriggerClasses = [];
+
+  if (overflowIndicator === 'count') {
+    if (size <= 24) {
+      popoverTriggerClasses.push(popoverTriggerStyles.caption2Strong);
+    } else if (size <= 28) {
+      popoverTriggerClasses.push(popoverTriggerStyles.caption1Strong);
+    } else if (size <= 40) {
+      popoverTriggerClasses.push(popoverTriggerStyles.body1Strong);
+    } else if (size <= 56) {
+      popoverTriggerClasses.push(popoverTriggerStyles.subtitle2);
+    } else if (size <= 96) {
+      popoverTriggerClasses.push(popoverTriggerStyles.subtitle1);
+    } else {
+      popoverTriggerClasses.push(popoverTriggerStyles.title3);
+    }
+  } else {
+    if (size <= 16) {
+      popoverTriggerClasses.push(popoverTriggerStyles.icon12);
+    } else if (size <= 24) {
+      popoverTriggerClasses.push(popoverTriggerStyles.icon16);
+    } else if (size <= 40) {
+      popoverTriggerClasses.push(popoverTriggerStyles.icon20);
+    } else if (size <= 48) {
+      popoverTriggerClasses.push(popoverTriggerStyles.icon24);
+    } else if (size <= 56) {
+      popoverTriggerClasses.push(popoverTriggerStyles.icon28);
+    } else if (size <= 72) {
+      popoverTriggerClasses.push(popoverTriggerStyles.icon32);
+    } else {
+      popoverTriggerClasses.push(popoverTriggerStyles.icon48);
+    }
+  }
+
   if (state.popoverTrigger) {
     state.popoverTrigger.className = mergeClasses(
       avatarGroupClassNames.popoverTrigger,
       popoverTriggerStyles.base,
       sizeStyles[size],
+      ...popoverTriggerClasses,
       popoverTriggerStyles.focusIndicator,
       layout !== 'pie' && popoverTriggerStyles.states,
       layout === 'pie' && popoverTriggerStyles.pie,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AvatarGroupItem, AvatarSizes } from '../index';
 // import { makeStyles, shorthands } from '@griffel/react';
 // import { Label } from '@fluentui/react-label';
-import { AvatarGroup } from '../AvatarGroup';
+import { AvatarGroup, AvatarGroupProps } from '../AvatarGroup';
 // import { Button } from '@fluentui/react-button';
 
 const avatarNames = [
@@ -27,7 +27,7 @@ export const Default = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
       {size.map((s, k) => (
-        <AvatarGroup layout="stack" key={k} size={s as AvatarSizes}>
+        <AvatarGroup layout="pie" key={k} size={s as AvatarSizes} overflowIndicator="icon">
           {avatarNames.map((name, key) => (
             <AvatarGroupItem key={key} name={name} />
           ))}
@@ -35,43 +35,34 @@ export const Default = () => {
       ))}
     </div>
   );
-  //   return (
-  //     <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-  //       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'gray' }}>
+  // const layouts = ['stack', 'spread', 'pie'];
+  // const cont: React.CSSProperties = {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   gap: '10px',
+  //   // backgroundColor: 'gray',
+  //   padding: '10px',
+  // };
+  // return (
+  //   <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+  //     {layouts.map((l, z) => (
+  //       <div key={z} style={cont}>
   //         {Array(avatarNames.length)
   //           .fill(0)
-  //           .map((n, key) => (
-  //             <AvatarGroup key={key}>
-  //               {avatarNames.slice(0, key).map((child, k) => (
-  //                 <AvatarGroupItem key={k} name={child} />
-  //               ))}
-  //             </AvatarGroup>
-  //           ))}
+  //           .map(
+  //             (n, key) =>
+  //               key > 0 && (
+  //                 <AvatarGroup key={key} layout={l as AvatarGroupProps['layout']}>
+  //                   {avatarNames.slice(0, key).map((child, k) => (
+  //                     <AvatarGroupItem key={k} name={child} />
+  //                   ))}
+  //                 </AvatarGroup>
+  //               ),
+  //           )}
   //       </div>
-  //       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'gray' }}>
-  //         {Array(avatarNames.length)
-  //           .fill(0)
-  //           .map((n, key) => (
-  //             <AvatarGroup layout="stack" key={key}>
-  //               {avatarNames.slice(0, key).map((child, k) => (
-  //                 <AvatarGroupItem key={k} name={child} />
-  //               ))}
-  //             </AvatarGroup>
-  //           ))}
-  //       </div>
-  //       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', backgroundColor: 'gray' }}>
-  //         {Array(avatarNames.length)
-  //           .fill(0)
-  //           .map((n, key) => (
-  //             <AvatarGroup layout="pie" key={key}>
-  //               {avatarNames.slice(0, key).map((child, k) => (
-  //                 <AvatarGroupItem key={k} name={child} />
-  //               ))}
-  //             </AvatarGroup>
-  //           ))}
-  //       </div>
-  //     </div>
-  //   );
+  //     ))}
+  //   </div>
+  // );
 };
 
 // export const Default = (props: Partial<AvatarGroupProps>) => {
