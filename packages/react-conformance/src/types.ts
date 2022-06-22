@@ -21,6 +21,7 @@ export interface TestOptions {
     expectedClassNames?: {
       [key: string]: string;
     };
+    getPortalElement?: (renderedResult: ReturnType<typeof render>) => HTMLElement;
   }[];
   'component-has-static-classname'?: {
     /** Prefix for the classname, if not `fui-` */
