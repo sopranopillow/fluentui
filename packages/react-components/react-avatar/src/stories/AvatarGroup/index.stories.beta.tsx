@@ -13,7 +13,7 @@ export { Indicator } from './AvatarGroupIndicator.stories';
 export { Color } from './AvatarGroupColor.stories';
 
 export default {
-  title: 'Preview Components/AvatarGroup',
+  title: 'Components/AvatarGroup',
   component: AvatarGroup,
   parameters: {
     docs: {

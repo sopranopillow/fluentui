@@ -4,12 +4,20 @@
 
 The Avatar component represents a person or entity. It displays the person's image, initials, or an icon, and can be either circular or square.
 
+The AvatarGroup component represents a group of multiple people or entities by taking care of the arrangement of individual Avatars in a spread, stack, or pie layout.
+
 ## Usage
 
 To import Avatar:
 
 ```js
 import { Avatar } from '@fluentui/react-components';
+```
+
+To import AvatarGroup:
+
+```js
+import { AvatarGroup, AvatarGroupItem } from '@fluentui/react-components';
 ```
 
 ### Examples
@@ -33,6 +41,22 @@ With active state indication:
 <Avatar name="Robin Counts" active={false} activeAppearance="ring-shadow" />
 ```
 
+AvatarGroup:
+
+```jsx
+<AvatarGroup>
+  <AvatarGroupItem name="Katri Athokas" />
+  <AvatarGroupItem name="Elvia Atkins" />
+  <AvatarGroupItem name="Cameron Evans" />
+  <AvatarGroupItem name="Wanda Howard" />
+  <AvatarGroupItem name="Mona Kane" />
+  <AvatarGroupItem name="Allan Munger" />
+  <AvatarGroupItem name="Daisy Phillips" />
+  <AvatarGroupItem name="Robert Tolbert" />
+  <AvatarGroupItem name="Kevin Sturgis" />
+</AvatarGroup>
+```
+
 See [Fluent UI Storybook](https://react.fluentui.dev/) for more detailed usage examples.
 
 Alternatively, run Storybook locally with:
@@ -46,4 +70,4 @@ See [SPEC.md](./SPEC.md).
 
 ### Migration Guide
 
-If you're upgrading to Fluent UI v9 see [MIGRATION.md](./MIGRATION.md) for guidance on updating to the latest Avatar implementation.
+If you're upgrading to Fluent UI v9 see [MIGRATION.md](./src/stories/Avatar/MIGRATION.md) for guidance on updating to the latest Avatar implementation and [MIGRATION.md](./src/stories/AvatarGroup/MIGRATION.md) for AvatarGroup.

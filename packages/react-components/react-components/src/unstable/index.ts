@@ -9,26 +9,6 @@ export {
 } from '@fluentui/react-alert';
 export type { AlertProps, AlertSlots, AlertState } from '@fluentui/react-alert';
 export {
-  AvatarGroup,
-  AvatarGroupItem,
-  avatarGroupClassNames,
-  avatarGroupItemClassNames,
-  renderAvatarGroup_unstable,
-  renderAvatarGroupItem_unstable,
-  useAvatarGroup_unstable,
-  useAvatarGroupItem_unstable,
-  useAvatarGroupStyles_unstable,
-  useAvatarGroupItemStyles_unstable,
-} from '@fluentui/react-avatar';
-export type {
-  AvatarGroupProps,
-  AvatarGroupSlots,
-  AvatarGroupState,
-  AvatarGroupItemProps,
-  AvatarGroupItemSlots,
-  AvatarGroupItemState,
-} from '@fluentui/react-avatar';
-export {
   Card,
   CardFooter,
   CardHeader,

@@ -190,12 +190,34 @@ export type {
 } from '@fluentui/react-accordion';
 export {
   Avatar,
+  AvatarGroup,
+  AvatarGroupItem,
   avatarClassNames,
+  avatarGroupClassNames,
+  avatarGroupItemClassNames,
   renderAvatar_unstable,
+  renderAvatarGroup_unstable,
+  renderAvatarGroupItem_unstable,
   useAvatar_unstable,
+  useAvatarGroup_unstable,
+  useAvatarGroupItem_unstable,
   useAvatarStyles_unstable,
+  useAvatarGroupStyles_unstable,
+  useAvatarGroupItemStyles_unstable,
 } from '@fluentui/react-avatar';
-export type { AvatarNamedColor, AvatarProps, AvatarSizes, AvatarSlots, AvatarState } from '@fluentui/react-avatar';
+export type {
+  AvatarNamedColor,
+  AvatarProps,
+  AvatarGroupProps,
+  AvatarGroupItemProps,
+  AvatarSizes,
+  AvatarSlots,
+  AvatarGroupSlots,
+  AvatarGroupItemSlots,
+  AvatarState,
+  AvatarGroupState,
+  AvatarGroupItemState,
+} from '@fluentui/react-avatar';
 export {
   Badge,
   CounterBadge,
