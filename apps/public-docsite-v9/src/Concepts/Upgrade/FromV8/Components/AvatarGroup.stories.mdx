@@ -1,0 +1,97 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Concepts/Upgrading/from v8/Components/AvatarGroup Upgrade" />
+
+# AvatarGroup Upgrade
+
+Fluent UI v8 provides Facepile which allows people to display a list of personas. Fluent UI v9 provides an AvatarGroup, but has a different API.
+
+v9 key changes:
+
+- Doesn't use data prop, instead `AvatarGroupItem` is used to represent an `Avatar`.
+- Does not provide a face adding functionality.
+- An overflow button will always render when the `AvatarGroupItem`s overflow.
+- `AvatarGroup` provides a `Popover` to display the overflowed `AvatarGroupItem`s.
+
+## Overview:
+
+Before:
+
+```tsx
+import { Facepile, IFacepilePersona, PersonaSize } from '@fluentui/react';
+import { facepilePersonas } from '@fluentui/example-data';
+
+const facepilePersonas: IFacepilePersona[] = [
+  {
+    personaName: 'Katri Athokas',
+  },{
+    personaName: 'Elvia Atkins',
+  },{
+    personaName: 'Cameron Evans',
+  },{
+    personaName: 'Wanda Howard',
+  },{
+    personaName: 'Mona Kane',
+  },{
+    personaName: 'Allan Munger',
+  },{
+    personaName: 'Daisy Phillips',
+  },{
+    personaName: 'Robert Tolbert',
+  },{
+    personaName: 'Kevin Sturgis',
+  },
+];
+
+const Component => (
+  <Facepile
+    personaSize={PersonaSize.size24}
+    personas={facepilePersonas}
+  />
+);
+```
+
+After:
+
+```tsx
+import { AvatarGroup, AvatarGroupItem } from '@fluentui/react-components';
+
+const Component => (
+  <AvatarGroup size={24}>
+    <AvatarGroupItem name="Katri Athokas" />
+    <AvatarGroupItem name="Elvia Atkins" />
+    <AvatarGroupItem name="Cameron Evans" />
+    <AvatarGroupItem name="Wanda Howard" />
+    <AvatarGroupItem name="Mona Kane" />
+    <AvatarGroupItem name="Allan Munger" />
+    <AvatarGroupItem name="Daisy Phillips" />
+    <AvatarGroupItem name="Robert Tolbert" />
+    <AvatarGroupItem name="Kevin Sturgis" />
+  </AvatarGroup>
+);
+```
+
+## How to migrate props:
+
+| `Facepile` props         | v9 migrate guide                                                         |
+| ------------------------ | ------------------------------------------------------------------------ |
+| `personas`               | use `AvatarGroupItem`s for each Avatar inside `AvatarGroup`'s `children` |
+| `className`              | `className`                                                              |
+| `getPersonaProps`        | interact directly with `AvatarGroupItem`'s props                         |
+| `maxDisplayablePersonas` | use `maxAvatars` prop instead                                            |
+| `overflowButtonProps`    | use `overflowButton` slot props                                          |
+| `overflowButtonType`     | use `overflowIndicator` prop instead                                     |
+| `personaSize`            | use `size` props instead                                                 |
+
+- Unsupported `Facepile` props:
+  - `addButtonProps`
+  - `onRenderPersonaWrapper`
+  - `overflowPersonas`
+  - `showAddButton`
+  - `showTooltip`
+
+---
+
+## Migrate style overrides
+
+⚠️ **If this is your first migration**, please read [the general guide on how to migrate styles](?path=/docs/concepts-upgrading-from-v0-custom-style-overrides--page).
