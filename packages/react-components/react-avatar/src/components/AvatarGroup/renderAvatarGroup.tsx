@@ -10,14 +10,14 @@ import type { AvatarGroupState, AvatarGroupSlots } from './AvatarGroup.types';
  */
 export const renderAvatarGroup_unstable = (state: AvatarGroupState) => {
   const { slots, slotProps } = getSlots<AvatarGroupSlots>(state);
-  const { layout, size, nonOverflowAvatarsCount } = state;
+  const { layout, size, nonOverflowAvatarsCount, onPopoverOpenChange } = state;
 
   return (
     <AvatarGroupContext.Provider value={{ layout, size, nonOverflowAvatarsCount }}>
       <slots.root {...slotProps.root}>
         {state.root.children}
         {state.hasOverflow && slots.overflowButton && slots.overflowContent && slots.overflowSurface && (
-          <Popover trapFocus size="small">
+          <Popover onOpenChange={onPopoverOpenChange} trapFocus size="small">
             <PopoverTrigger>
               <Tooltip content={state.tooltipContent} relationship="label">
                 <slots.overflowButton {...slotProps.overflowButton} />

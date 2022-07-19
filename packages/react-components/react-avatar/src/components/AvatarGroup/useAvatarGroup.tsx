@@ -3,6 +3,7 @@ import { getNativeElementProps, resolveShorthand } from '@fluentui/react-utiliti
 import { MoreHorizontalRegular } from '@fluentui/react-icons';
 import { PopoverSurface } from '@fluentui/react-popover';
 import type { AvatarGroupProps, AvatarGroupState } from './AvatarGroup.types';
+import { PopoverProps } from '@fluentui/react-popover';
 
 /**
  * Create the state required to render AvatarGroup.
@@ -17,6 +18,7 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
   const { children, layout = 'spread', maxAvatars = 5, size = defaultAvatarGroupSize } = props;
   const { overflowIndicator = size < 24 ? 'icon' : 'count' } = props;
   const childrenArray = React.Children.toArray(children);
+  const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
 
   let rootChildren = childrenArray;
   let overflowChildren;
@@ -37,6 +39,10 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
       overflowButtonChildren = numOfAvatarsToHide > 99 ? '99+' : `+${numOfAvatarsToHide}`;
     }
   }
+
+  const onPopoverOpenChange: PopoverProps['onOpenChange'] = (e, data) => {
+    setIsPopoverOpen(data.open);
+  };
 
   const root = getNativeElementProps(
     'div',
@@ -74,6 +80,8 @@ export const useAvatarGroup_unstable = (props: AvatarGroupProps, ref: React.Ref<
   return {
     nonOverflowAvatarsCount: rootChildren.length,
     hasOverflow: !!overflowChildren,
+    isPopoverOpen,
+    onPopoverOpenChange,
     layout,
     overflowIndicator,
     size,

@@ -2,6 +2,7 @@ import { PopoverSurface } from '@fluentui/react-popover';
 import { TooltipProps } from '@fluentui/react-tooltip';
 import type { AvatarSizes } from '../Avatar/Avatar.types';
 import type { ComponentProps, ComponentState, Slot } from '@fluentui/react-utilities';
+import type { PopoverProps } from '@fluentui/react-popover';
 
 export type AvatarGroupSlots = {
   root: NonNullable<Slot<'div'>>;
@@ -70,4 +71,6 @@ export type AvatarGroupState = ComponentState<AvatarGroupSlots> &
     tooltipContent: TooltipProps['content'];
 
     nonOverflowAvatarsCount: number;
+    onPopoverOpenChange: PopoverProps['onOpenChange'];
+    isPopoverOpen: boolean;
   };
