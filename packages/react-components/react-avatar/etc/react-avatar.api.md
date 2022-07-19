@@ -9,6 +9,7 @@
 import type { ComponentProps } from '@fluentui/react-utilities';
 import type { ComponentState } from '@fluentui/react-utilities';
 import type { ForwardRefComponent } from '@fluentui/react-utilities';
+import type { PopoverProps } from '@fluentui/react-popover';
 import { PopoverSurface } from '@fluentui/react-popover';
 import { PresenceBadge } from '@fluentui/react-badge';
 import * as React_2 from 'react';
@@ -73,6 +74,8 @@ export type AvatarGroupState = ComponentState<AvatarGroupSlots> & Required<Pick<
     hasOverflow: boolean;
     tooltipContent: TooltipProps['content'];
     nonOverflowAvatarsCount: number;
+    onPopoverOpenChange: PopoverProps['onOpenChange'];
+    isPopoverOpen: boolean;
 };
 
 // @public

@@ -89,6 +89,12 @@ const useOverflowButtonStyles = makeStyles({
     },
   },
 
+  selected: {
+    color: tokens.colorNeutralForeground1Selected,
+    backgroundColor: tokens.colorNeutralBackground1Selected,
+    ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
+  },
+
   pie: {
     backgroundColor: tokens.colorTransparentBackground,
     ...shorthands.borderColor(tokens.colorTransparentStroke),
@@ -118,7 +124,7 @@ const useOverflowButtonStyles = makeStyles({
  * Apply styling to the AvatarGroup slots based on the state
  */
 export const useAvatarGroupStyles_unstable = (state: AvatarGroupState): AvatarGroupState => {
-  const { layout, overflowIndicator, size } = state;
+  const { isPopoverOpen, layout, overflowIndicator, size } = state;
   const styles = useStyles();
   const sizeStyles = useSizeStyles();
   const overflowButtonStyles = useOverflowButtonStyles();
@@ -200,6 +206,7 @@ export const useAvatarGroupStyles_unstable = (state: AvatarGroupState): AvatarGr
       overflowButtonStyles.base,
       ...overflowButtonClasses,
       layout !== 'pie' && overflowButtonStyles.states,
+      layout !== 'pie' && isPopoverOpen && overflowButtonStyles.selected,
       layout !== 'pie' && overflowButtonStyles.focusIndicator,
       layout === 'pie' && overflowButtonStyles.pieFocusIndicator,
       layout === 'pie' && overflowButtonStyles.pie,
