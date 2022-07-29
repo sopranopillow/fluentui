@@ -1,3 +1,5 @@
+import { AvatarGroupProps } from '../AvatarGroup';
+
 /**
  * Get the inline items and overflowing items based on the array of AvatarGroupItems needed for AvatarGroup.
  *
@@ -10,7 +12,11 @@
  * NOTE: Each item in the array must be a single AvatarGroupItem. If an item in the array contains a fragment with
  * two avatars, the items will not be partitioned correctly.
  */
-export const getPartitionedAvatarGroupItems = (items: JSX.Element[], maxItems = 5) => {
+export const getPartitionedAvatarGroupItems = (
+  items: JSX.Element[],
+  maxItems = 5,
+  layout: AvatarGroupProps['layout'],
+) => {
   // When there are more items than maxItems, we need to subtract one to make space for the overflow indicator.
   const numOfInlineItems = items.length > maxItems ? maxItems - 1 : maxItems;
 

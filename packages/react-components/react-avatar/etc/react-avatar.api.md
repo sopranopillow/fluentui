@@ -97,7 +97,7 @@ export type AvatarGroupOverflowState = ComponentState<AvatarGroupOverflowSlots> 
 
 // @public
 export type AvatarGroupProps = ComponentProps<AvatarGroupSlots> & {
-    layout?: 'spread' | 'stack';
+    layout?: 'spread' | 'stack' | 'pie';
     size?: AvatarSizes;
 };
 
@@ -152,7 +152,7 @@ export function getInitials(displayName: string | undefined | null, isRtl: boole
 }): string;
 
 // @public
-export const getPartitionedAvatarGroupItems: (items: JSX.Element[], maxItems?: number) => {
+export const getPartitionedAvatarGroupItems: (items: JSX.Element[], maxItems: number | undefined, layout: AvatarGroupProps['layout']) => {
     inlineItems: JSX.Element[];
     overflowItems: JSX.Element[];
 };

@@ -59,6 +59,12 @@ const useTriggerButtonStyles = makeStyles({
     },
   },
 
+  pie: {
+    backgroundColor: tokens.colorTransparentBackground,
+    ...shorthands.borderColor(tokens.colorTransparentStroke),
+    color: 'transparent',
+  },
+
   // These styles match the default button styles.
   focusIndicator: createCustomFocusIndicatorStyle({
     ...shorthands.borderColor('transparent'),
@@ -162,13 +168,14 @@ export const useAvatarGroupOverflowStyles_unstable = (state: AvatarGroupOverflow
 
   state.triggerButton.className = mergeClasses(
     avatarGroupOverflowClassNames.triggerButton,
+    groupChildClassName,
     sizeStyles[size],
     triggerButtonStyles.base,
+    layout === 'pie' && triggerButtonStyles.pie,
+    layout !== 'pie' && triggerButtonStyles.states,
+    layout !== 'pie' && triggerButtonStyles.focusIndicator,
+    layout !== 'pie' && isPopoverOpen && triggerButtonStyles.selected,
     ...triggerButtonClasses,
-    groupChildClassName,
-    triggerButtonStyles.focusIndicator,
-    triggerButtonStyles.states,
-    isPopoverOpen && triggerButtonStyles.selected,
     state.triggerButton.className,
   );
 
