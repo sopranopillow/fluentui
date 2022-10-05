@@ -65,7 +65,7 @@ export async function getImportsFromIndexFile(distDir: string, filename: string)
         imports.push({
           local: importName,
           imported: importPrefix + importName,
-          path: path.relative(distDir, path.resolve(path.dirname(filename), sourcePath.node.value)),
+          path: path.relative(distDir, path.resolve(path.dirname(filename), sourcePath.node.value)).replace(/\\/g, '/'),
         });
       },
     },
