@@ -1,42 +1,46 @@
 import * as React from 'react';
 import { AnimationDirection } from '../Calendar/Calendar.types';
-import { DayOfWeek, FirstWeekOfYear, DateRangeType } from '../../utils';
-import type { Slot } from '@fluentui/react-utilities';
-import type { IStyle, ITheme } from '@fluentui/style-utilities';
-import type { IBaseProps, IStyleFunctionOrObject } from '@fluentui/utilities';
+import { DayOfWeek, FirstWeekOfYear, DateRangeType, Day } from '../../utils';
+import type { CalendarDayMonthHeaderRowProps } from './CalendarMonthHeaderRow';
+import type { ComponentProps, ComponentState, Slot } from '@fluentui/react-utilities';
+import type { IBaseProps } from '@fluentui/utilities';
 import type { CalendarStrings, DateFormatting, DayGridOptions } from '../../utils';
+import type { CalendarGridRowProps } from './CalendarGridRow';
 
 export type CalendarDayGridSlots = {
-  root: Slot<'div'>;
+  root: NonNullable<Slot<'tbody'>>;
+  table: NonNullable<Slot<'table'>>;
+  calendarMonthHeaderRow: NonNullable<Slot<Partial<CalendarDayMonthHeaderRowProps>>>;
+  firstCalendarGridRow: NonNullable<Slot<Partial<CalendarGridRowProps>>>;
+  lastCalendarGridRow: NonNullable<Slot<Partial<CalendarGridRowProps>>>;
 };
 
-/**
- * {@docCategory Calendar}
- */
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export interface ICalendarDayGrid {
-  focus(): void;
-}
+export type CalendarDayGridProps = ComponentProps<Partial<CalendarDayGridSlots>> & SharedCalendarDayGridProps;
 
-/**
- * {@docCategory Calendar}
- */
-export interface CalendarDayGridProps extends DayGridOptions, IBaseProps<ICalendarDayGrid> {
+export type CalendarDayGridState = ComponentState<CalendarDayGridSlots> &
+  Required<
+    Pick<
+      CalendarDayGridProps,
+      'animationDirection' | 'dateRangeType' | 'lightenDaysOutsideNavigatedMonth' | 'showWeekNumbers'
+    >
+  > & {
+    animateBackwards?: boolean;
+    calendarGridRow?: string;
+    middleWeeks: DayInfo[][];
+    middleWeekProps: Omit<CalendarGridRowProps, 'week' | 'weekIndex' | 'rowClassName'>;
+  };
+
+export type SharedCalendarDayGridProps = {
   /**
    * Optional callback to access the ICalendarDayGrid interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
    */
   componentRef?: React.RefObject<ICalendarDayGrid>;
 
-  /**
-   * Customized styles for the component.
-   */
-  styles?: IStyleFunctionOrObject<CalendarDayGridStyleProps, CalendarDayGridStyles>;
-
-  /**
-   * Theme (provided through customization).
-   */
-  theme?: ITheme;
+  // /**
+  //  * Customized styles for the component.
+  //  */
+  // styles?: IStyleFunctionOrObject<CalendarDayGridStyleProps, CalendarDayGridStyles>;
 
   /**
    * Additional CSS class(es) to apply to the CalendarDayGrid.
@@ -125,11 +129,7 @@ export interface CalendarDayGridProps extends DayGridOptions, IBaseProps<ICalend
    * Ref callback for individual days. Allows for customization of the styling, properties, or listeners of the
    * specific day.
    */
-  customDayCellRef?: (
-    element: HTMLElement,
-    date: Date,
-    classNames: Record<keyof CalendarDayGridStyles, string>,
-  ) => void;
+  customDayCellRef?: (element: HTMLElement, date: Date) => void;
 
   /**
    * How many weeks to show by default. If not provided, will show enough weeks to display the current
@@ -194,6 +194,33 @@ export interface CalendarDayGridProps extends DayGridOptions, IBaseProps<ICalend
    * marked.
    */
   getMarkedDays?: (startingDate: Date, endingDate: Date) => Date[];
+};
+
+export interface WeekCorners {
+  [key: string]: string;
+}
+
+export interface DayInfo extends Day {
+  onSelected: () => void;
+  setRef(element: HTMLElement | null): void;
+}
+
+/**
+ * {@docCategory Calendar}
+ */
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export interface ICalendarDayGrid {
+  focus(): void;
+}
+
+/**
+ * {@docCategory Calendar}
+ */
+export interface CalendarDayGridPropsOld
+  extends DayGridOptions,
+    IBaseProps<ICalendarDayGrid>,
+    SharedCalendarDayGridProps {
+  componentRef: SharedCalendarDayGridProps['componentRef'];
 }
 
 /**
@@ -229,96 +256,4 @@ export interface CalendarDayGridStyleProps {
    * The cardinal directions for animation to occur during transitions, either horizontal or vertical
    */
   animationDirection?: AnimationDirection;
-}
-
-/**
- * {@docCategory Calendar}
- */
-export interface CalendarDayGridStyles {
-  /**
-   * The style for the root div
-   */
-  wrapper?: IStyle;
-
-  /**
-   * The style for the table containing the grid
-   */
-  table?: IStyle;
-
-  /**
-   * The style to apply to the grid cells for days
-   */
-  dayCell?: IStyle;
-
-  /**
-   * The style to apply to grid cells for days in the selected range
-   */
-  daySelected?: IStyle;
-
-  /**
-   * The style to apply to row around weeks
-   */
-  weekRow?: IStyle;
-
-  /**
-   * The style to apply to the column headers above the weeks
-   */
-  weekDayLabelCell?: IStyle;
-
-  /**
-   * The style to apply to grid cells for week numbers
-   */
-  weekNumberCell?: IStyle;
-
-  /**
-   * The style to apply to individual days that are outside the min/max date range
-   */
-  dayOutsideBounds?: IStyle;
-
-  /**
-   * The style to apply to individual days that are outside the current month
-   */
-  dayOutsideNavigatedMonth?: IStyle;
-
-  /**
-   * The style to apply to the button element within the day cells
-   */
-  dayButton?: IStyle;
-
-  /**
-   * The style to apply to the individual button element that matches the "today" parameter
-   */
-  dayIsToday?: IStyle;
-
-  /**
-   * The style applied to the first placeholder week used during transitions
-   */
-  firstTransitionWeek?: IStyle;
-
-  /**
-   * The style applied to the last placeholder week used during transitions
-   */
-  lastTransitionWeek?: IStyle;
-
-  /**
-   * The style applied to the marker on days to mark as important
-   */
-  dayMarker?: IStyle;
-
-  /**
-   * The styles to apply to days for rounded corners. Can apply multiple to round multiple corners
-   */
-  topRightCornerDate?: IStyle;
-  topLeftCornerDate?: IStyle;
-  bottomRightCornerDate?: IStyle;
-  bottomLeftCornerDate?: IStyle;
-
-  /**
-   * The styles to apply to days for focus borders. Can apply multiple if there are multiple focused days
-   * around the current focused date
-   */
-  datesAbove?: IStyle;
-  datesBelow?: IStyle;
-  datesLeft?: IStyle;
-  datesRight?: IStyle;
 }

@@ -1,8 +1,7 @@
 import * as React from 'react';
 import type { Slot } from '@fluentui/react-utilities';
 import type { IStyle, ITheme } from '@fluentui/style-utilities';
-import type { IBaseProps } from '@fluentui/utilities';
-import type { CalendarStrings, DateFormatting } from '../../utils';
+import type { CalendarStrings, DateFormatting, IBaseProps } from '../../utils';
 import type { CalendarNavigationIcons } from '../Calendar/Calendar.types';
 import type {
   CalendarDayGridProps,
@@ -12,6 +11,8 @@ import type {
 
 export type CalendarDaySlots = {
   root: Slot<'div'>;
+  header: Slot<'div'>;
+  calendarDayGrid: Slot<'div'>;
 };
 
 /**

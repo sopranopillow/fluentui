@@ -3,3 +3,4 @@ export * from './findAvailableDate';
 export * from './getBoundedDateRange';
 export * from './getDayGrid';
 export * from './isRestrictedDate';
+export * from './getDateRangeTypeToUse';

@@ -99,7 +99,7 @@ const useLiveRegionStyles = makeStyles({
  * Apply styling to the Calendar slots based on the state
  */
 // export const useCalendarStyles_unstable = (state: CalendarState): CalendarState => {
-export const useCalendarStyles_unstable = (props: CalendarStyleProps): Record<keyof CalendarStyles, string> => {
+export const useCalendarStyles_unstable = (props: CalendarStyleProps) => {
   const rootStyles = useRootStyles();
   const dividerStyles = useDividerStyles();
   const monthPickerWrapperStyles = useMonthPickerWrapperStyles();

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { Slot } from '@fluentui/react-utilities';
 import type { IStyle, ITheme } from '@fluentui/style-utilities';
-import type { IBaseProps, IStyleFunctionOrObject } from '@fluentui/utilities';
+// import type { IStyleFunctionOrObject } from '@fluentui/utilities';
 import type { CalendarStrings, DateFormatting, DateRangeType, DayOfWeek, FirstWeekOfYear } from '../../utils';
 import type { CalendarDayProps } from '../CalendarDay/CalendarDay.types';
 import type { CalendarMonthProps } from '../CalendarMonth/CalendarMonth.types';
@@ -22,7 +22,7 @@ export interface ICalendar {
 /**
  * {@docCategory Calendar}
  */
-export interface CalendarProps extends IBaseProps<ICalendar>, React.RefAttributes<HTMLDivElement> {
+export interface CalendarProps extends ICalendar, React.RefAttributes<HTMLDivElement> {
   /**
    * Optional callback to access the ICalendar interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
@@ -32,7 +32,7 @@ export interface CalendarProps extends IBaseProps<ICalendar>, React.RefAttribute
   /**
    * Customized styles for the calendar component
    */
-  styles?: IStyleFunctionOrObject<CalendarStyleProps, CalendarStyles>;
+  // styles?: IStyleFunctionOrObject<CalendarStyleProps, CalendarStyles>;
 
   /**
    * Customized props for the calendar day
@@ -271,23 +271,23 @@ export interface CalendarStyleProps {
   showWeekNumbers?: boolean;
 }
 
-/**
- * {@docCategory Calendar}
- */
-export interface CalendarStyles {
-  /**
-   * Style for the root element.
-   */
-  root: IStyle;
+// /**
+//  * {@docCategory Calendar}
+//  */
+// export interface CalendarStyles {
+//   /**
+//    * Style for the root element.
+//    */
+//   root: IStyle;
 
-  divider: IStyle;
+//   divider: IStyle;
 
-  goTodayButton: IStyle;
+//   goTodayButton: IStyle;
 
-  monthPickerWrapper: IStyle;
+//   monthPickerWrapper: IStyle;
 
-  liveRegion: IStyle;
-}
+//   liveRegion: IStyle;
+// }
 
 /**
  * {@docCategory Calendar}

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { getWeekNumbersInMonth } from '../../utils';
 import { CalendarGridDayCell } from './CalendarGridDayCell';
-import type { CalendarDayGridProps, CalendarDayGridStyles } from './CalendarDayGrid.types';
-import type { DayInfo, WeekCorners } from './CalendarDayGrid';
+import { useCalendarGridRowStyles } from './useCalendarGridRowStyles';
+import type { CalendarDayGridProps, DayInfo, WeekCorners } from './CalendarDayGrid.types';
 
 export interface CalendarGridRowProps extends CalendarDayGridProps {
-  classNames: Record<keyof CalendarDayGridStyles, string>;
   weeks: DayInfo[][];
   week: DayInfo[];
   weekIndex: number;
@@ -15,20 +14,13 @@ export interface CalendarGridRowProps extends CalendarDayGridProps {
   ariaRole?: string;
   navigatedDayRef: React.MutableRefObject<HTMLTableCellElement>;
   activeDescendantId: string;
-  calculateRoundedStyles(
-    classNames: Record<keyof CalendarDayGridStyles, string>,
-    above: boolean,
-    below: boolean,
-    left: boolean,
-    right: boolean,
-  ): string;
+  calculateRoundedStyles(above: boolean, below: boolean, left: boolean, right: boolean): string;
   getDayInfosInRangeOfDay(dayToCompare: DayInfo): DayInfo[];
   getRefsFromDayInfos(dayInfosInRange: DayInfo[]): (HTMLElement | null)[];
 }
 
 export const CalendarGridRow: React.FunctionComponent<CalendarGridRowProps> = props => {
   const {
-    classNames,
     week,
     weeks,
     weekIndex,
@@ -48,16 +40,12 @@ export const CalendarGridRow: React.FunctionComponent<CalendarGridRowProps> = pr
     ? strings.weekNumberFormatString && strings.weekNumberFormatString.replace('{0}', `${weekNumbers[weekIndex]}`)
     : '';
 
+  const { weekNumberCell } = useCalendarGridRowStyles();
+
   return (
     <tr role={ariaRole} className={rowClassName} key={weekIndex + '_' + week[0].key}>
       {showWeekNumbers && weekNumbers && (
-        <th
-          className={classNames.weekNumberCell}
-          key={weekIndex}
-          title={titleString}
-          aria-label={titleString}
-          scope="row"
-        >
+        <th className={weekNumberCell} key={weekIndex} title={titleString} aria-label={titleString} scope="row">
           <span>{weekNumbers[weekIndex]}</span>
         </th>
       )}

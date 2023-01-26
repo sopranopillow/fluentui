@@ -1,17 +1,20 @@
 import * as React from 'react';
 import { mergeClasses } from '@griffel/react';
 import { DAYS_IN_WEEK } from '../../utils';
-import type { CalendarDayGridProps, CalendarDayGridStyles } from './CalendarDayGrid.types';
-import type { DayInfo } from './CalendarDayGrid';
+import type { CalendarDayGridProps } from './CalendarDayGrid.types';
+import type { DayInfo } from './CalendarDayGrid.types';
+import { calendarGridDayCellClassNames } from './useCalendarGridDayCellStyles';
+import { useCalendarMonthHeaderRowStyles_unstable } from './useCalendarMonthHeaderRowStyles';
 
 export interface CalendarDayMonthHeaderRowProps extends CalendarDayGridProps {
+  //TODO: rename this to CalendarMonthHeaderRowProps
   weeks: DayInfo[][];
-  classNames: Record<keyof CalendarDayGridStyles, string>;
 }
 
 export const CalendarMonthHeaderRow: React.FunctionComponent<CalendarDayMonthHeaderRowProps> = props => {
-  const { showWeekNumbers, strings, firstDayOfWeek, allFocusable, weeksToShow, weeks, classNames } = props;
+  const { showWeekNumbers, strings, firstDayOfWeek, allFocusable, weeksToShow, weeks } = props;
   const dayLabels = strings.shortDays.slice();
+  const classNames = useCalendarMonthHeaderRowStyles_unstable();
 
   let firstOfMonthIndex = -1;
   const firstWeekOfMonth = weeks![1];
@@ -30,13 +33,13 @@ export const CalendarMonthHeaderRow: React.FunctionComponent<CalendarDayMonthHea
 
   return (
     <tr>
-      {showWeekNumbers && <th className={classNames.dayCell} />}
+      {showWeekNumbers && <th className={calendarGridDayCellClassNames.dayCell} />}
       {dayLabels.map((val: string, index: number) => {
         const i = (index + firstDayOfWeek) % DAYS_IN_WEEK;
         const label = strings.days[i];
         return (
           <th
-            className={mergeClasses(classNames.dayCell, classNames.weekDayLabelCell)}
+            className={mergeClasses(calendarGridDayCellClassNames.dayCell, classNames.weekDayLabelCell)}
             scope="col"
             key={dayLabels[i] + ' ' + index}
             title={label}

@@ -4,7 +4,7 @@ import { ArrowDownRegular, ArrowUpRegular, DismissRegular } from '@fluentui/reac
 import { useId } from '@fluentui/react-utilities';
 import { mergeClasses } from '@griffel/react';
 import { addMonths, compareDatePart, getMonthEnd, getMonthStart } from '../../utils';
-import { CalendarDayGrid } from '../CalendarDayGrid/CalendarDayGrid';
+import { SlotsCalendarDayGrid } from '../CalendarDayGrid/CalendarDayGrid';
 import { useCalendarDayStyles_unstable } from './useCalendarDayStyles';
 import type { ICalendarDayGrid } from '../CalendarDayGrid/CalendarDayGrid.types';
 import type { CalendarDayProps, CalendarDayStyles } from './CalendarDay.types';
@@ -52,7 +52,7 @@ export const CalendarDay: React.FunctionComponent<CalendarDayProps> = props => {
     ? strings.yearPickerHeaderAriaLabel.replace('{0}', monthAndYear)
     : monthAndYear;
 
-  const { styles: _, ...propsWithoutStyles } = props;
+  const { ...propsWithoutStyles } = props;
 
   return (
     <div className={classNames.root}>
@@ -72,9 +72,8 @@ export const CalendarDay: React.FunctionComponent<CalendarDayProps> = props => {
         </HeaderButtonComponentType>
         <CalendarDayNavigationButtons {...props} classNames={classNames} />
       </div>
-      <CalendarDayGrid
+      <SlotsCalendarDayGrid
         {...propsWithoutStyles}
-        // styles={styles}
         componentRef={dayGrid}
         strings={strings}
         navigatedDate={navigatedDate!}

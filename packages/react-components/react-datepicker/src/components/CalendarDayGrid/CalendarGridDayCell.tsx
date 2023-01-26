@@ -5,8 +5,10 @@ import { useFluent_unstable } from '@fluentui/react-shared-contexts';
 import { mergeClasses } from '@griffel/react';
 import { addDays, addWeeks, compareDates, findAvailableDate, DateRangeType } from '../../utils';
 import type { AvailableDateOptions } from '../../utils';
-import type { DayInfo } from './CalendarDayGrid';
+import type { DayInfo } from './CalendarDayGrid.types';
 import type { CalendarGridRowProps } from './CalendarGridRow';
+import { useCalendarGridDayCellStyles } from './useCalendarGridDayCellStyles';
+import { weekCornerClassNames } from './useWeekCornerStyles';
 
 export interface CalendarGridDayCellProps extends CalendarGridRowProps {
   day: DayInfo;
@@ -23,7 +25,6 @@ export const CalendarGridDayCell: React.FunctionComponent<CalendarGridDayCellPro
     navigatedDayRef,
     calculateRoundedStyles,
     weeks,
-    classNames,
     day,
     dayIndex,
     weekIndex,
@@ -40,6 +41,8 @@ export const CalendarGridDayCell: React.FunctionComponent<CalendarGridDayCellPro
     getDayInfosInRangeOfDay,
     getRefsFromDayInfos,
   } = props;
+  const classNames = useCalendarGridDayCellStyles(props);
+
   const cornerStyle = weekCorners?.[weekIndex + '_' + dayIndex] ?? '';
   const isNavigatedDate = compareDates(navigatedDate, day.originalDate);
 
@@ -121,19 +124,13 @@ export const CalendarGridDayCell: React.FunctionComponent<CalendarGridDayCellPro
         ) {
           // remove the static classes first to overwrite them
           dayRef.classList.remove(
-            classNames.bottomLeftCornerDate!,
-            classNames.bottomRightCornerDate!,
-            classNames.topLeftCornerDate!,
-            classNames.topRightCornerDate!,
+            weekCornerClassNames.bottomLeftCornerDate!,
+            weekCornerClassNames.bottomRightCornerDate!,
+            weekCornerClassNames.topLeftCornerDate!,
+            weekCornerClassNames.topRightCornerDate!,
           );
 
-          const classNamesToAdd = calculateRoundedStyles(
-            classNames,
-            false,
-            false,
-            index > 0,
-            index < dayRefs.length - 1,
-          ).trim();
+          const classNamesToAdd = calculateRoundedStyles(false, false, index > 0, index < dayRefs.length - 1).trim();
           if (classNamesToAdd) {
             dayRef.classList.add(...classNamesToAdd.split(' '));
           }
@@ -178,13 +175,7 @@ export const CalendarGridDayCell: React.FunctionComponent<CalendarGridDayCellPro
           daysToSelectInDayView &&
           daysToSelectInDayView > 1
         ) {
-          const classNamesToAdd = calculateRoundedStyles(
-            classNames,
-            false,
-            false,
-            index > 0,
-            index < dayRefs.length - 1,
-          ).trim();
+          const classNamesToAdd = calculateRoundedStyles(false, false, index > 0, index < dayRefs.length - 1).trim();
           if (classNamesToAdd) {
             dayRef.classList.remove(...classNamesToAdd.split(' '));
           }
@@ -223,7 +214,7 @@ export const CalendarGridDayCell: React.FunctionComponent<CalendarGridDayCellPro
         !day.isInMonth && classNames.dayOutsideNavigatedMonth,
       )}
       ref={(element: HTMLTableCellElement) => {
-        customDayCellRef?.(element, day.originalDate, classNames);
+        customDayCellRef?.(element, day.originalDate);
         day.setRef(element);
         isNavigatedDate && (navigatedDayRef.current = element);
       }}
