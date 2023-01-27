@@ -1,6 +1,6 @@
 import { tokens } from '@fluentui/react-theme';
-import { shorthands, makeStyles } from '@griffel/react';
-import { DateRangeType } from '../../utils';
+import { shorthands, makeStyles, mergeClasses } from '@griffel/react';
+import { DateRangeType, useWeekCornerStylesClassNames } from '../../utils';
 import { CalendarGridDayCellProps } from './CalendarGridDayCell';
 import { extraCalendarDayGridClassNames } from '../CalendarDayGrid/useCalendarDayGridStyles';
 
@@ -187,11 +187,12 @@ export const useCalendarGridDayCellStyles = (props: CalendarGridDayCellProps) =>
   const dayButtonStyles = useDayButtonStyles();
   const dayIsTodayStyles = useDayIsTodayStyles();
   const dayMarkerStyles = useDayMarkerStyles();
+  const weekCornerStyles = useWeekCornerStylesClassNames();
 
   const { dateRangeType, lightenDaysOutsideNavigatedMonth } = props;
 
   return {
-    dayCell: dayCellStyles.base,
+    dayCell: mergeClasses(dayCellStyles.base, weekCornerStyles),
     daySelected: dateRangeType !== DateRangeType.Month ? daySelectedStyles.dateRangeTypeNotMonth : '',
     dayOutsideBounds: dayOutsideBoundsStyles.base,
     dayOutsideNavigatedMonth: lightenDaysOutsideNavigatedMonth

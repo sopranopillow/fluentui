@@ -114,7 +114,6 @@ export const CalendarGridDayCell: React.FunctionComponent<CalendarGridDayCellPro
 
     dayRefs.forEach((dayRef: HTMLElement | null, index: number) => {
       if (dayRef) {
-        dayRef.classList.add('ms-CalendarDay-hoverStyle');
         if (
           !dayInfos[index].isSelected &&
           dateRangeType === DateRangeType.Day &&

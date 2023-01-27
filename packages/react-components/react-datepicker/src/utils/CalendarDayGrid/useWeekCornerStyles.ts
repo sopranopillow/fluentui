@@ -1,6 +1,6 @@
 import { useFluent_unstable } from '@fluentui/react-shared-contexts';
 import { tokens } from '@fluentui/react-theme';
-import { makeStyles, shorthands } from '@griffel/react';
+import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 import { DateRangeType, getDateRangeArray } from '../../utils';
 import { CalendarDayGridProps, DayInfo, WeekCorners } from '../../components/CalendarDayGrid/CalendarDayGrid.types';
 
@@ -166,54 +166,78 @@ export function useWeekCornerStyles(props: CalendarDayGridProps) {
 
 const useCornerDateStyles = makeStyles({
   topRight: {
-    borderTopRightRadius: '2px',
+    [`&.${weekCornerClassNames.topRightCornerDate}`]: {
+      borderTopRightRadius: '2px',
+    },
   },
   topLeft: {
-    borderTopLeftRadius: '2px',
+    [`&.${weekCornerClassNames.topLeftCornerDate}`]: {
+      borderTopLeftRadius: '2px',
+    },
   },
   bottomRight: {
-    borderBottomRightRadius: '2px',
+    [`&.${weekCornerClassNames.bottomRightCornerDate}`]: {
+      borderBottomRightRadius: '2px',
+    },
   },
   bottomLeft: {
-    borderBottomLeftRadius: '2px',
+    [`&.${weekCornerClassNames.bottomLeftCornerDate}`]: {
+      borderBottomLeftRadius: '2px',
+    },
   },
 });
 
+// datesAbove: 'fui-CalendarGridDayCell__datesAbove',
+// datesBelow: 'fui-CalendarGridDayCell__datesBelow',
+// datesLeft: 'fui-CalendarGridDayCell__datesLeft',
+// datesRight: 'fui-CalendarGridDayCell__datesRight',
+// topRightCornerDate: 'fui-CalendarGridDayCell__topRightCornerDate',
+// topLeftCornerDate: 'fui-CalendarGridDayCell__topLeftCornerDate',
+// bottomRightCornerDate: 'fui-CalendarGridDayCell__bottomRightCornerDate',
+// bottomLeftCornerDate: 'fui-CalendarGridDayCell__bottomLeftCornerDate',
 const useDatesPositionStyles = makeStyles({
   above: {
-    '&::before': {
-      ...shorthands.borderTop('1px', 'solid', tokens.colorNeutralStrokeAccessible),
+    [`&.${weekCornerClassNames.datesAbove}`]: {
+      '&::before': {
+        ...shorthands.borderTop('1px', 'solid', tokens.colorNeutralStrokeAccessible),
+      },
     },
   },
   below: {
-    '&::before': {
-      ...shorthands.borderBottom('1px', 'solid', tokens.colorNeutralStrokeAccessible),
+    [`&.${weekCornerClassNames.datesBelow}`]: {
+      '&::before': {
+        ...shorthands.borderBottom('1px', 'solid', tokens.colorNeutralStrokeAccessible),
+      },
     },
   },
   left: {
-    '&::before': {
-      ...shorthands.borderLeft('1px', 'solid', tokens.colorNeutralStrokeAccessible),
+    [`&.${weekCornerClassNames.datesLeft}`]: {
+      '&::before': {
+        ...shorthands.borderLeft('1px', 'solid', tokens.colorNeutralStrokeAccessible),
+      },
     },
   },
   right: {
-    '&::before': {
-      ...shorthands.borderRight('1px', 'solid', tokens.colorNeutralStrokeAccessible),
+    [`&.${weekCornerClassNames.datesRight}`]: {
+      '&::before': {
+        ...shorthands.borderRight('1px', 'solid', tokens.colorNeutralStrokeAccessible),
+      },
     },
   },
 });
 
-export const useWeekCornerClassNames = () => {
+export const useWeekCornerStylesClassNames = (): string => {
   const datesPositionStyles = useDatesPositionStyles();
   const cornerDateStyles = useCornerDateStyles();
 
-  return {
-    datesAbove: datesPositionStyles.above,
-    datesBelow: datesPositionStyles.below,
-    datesLeft: datesPositionStyles.left,
-    datesRight: datesPositionStyles.right,
-    topRightCornerDate: cornerDateStyles.topRight,
-    topLeftCornerDate: cornerDateStyles.topLeft,
-    bottomRightCornerDate: cornerDateStyles.bottomRight,
-    bottomLeftCornerDate: cornerDateStyles.bottomLeft,
-  };
+  return mergeClasses(
+    datesPositionStyles.above,
+    datesPositionStyles.below,
+    datesPositionStyles.left,
+    datesPositionStyles.right,
+    cornerDateStyles.topRight,
+    cornerDateStyles.topLeft,
+    cornerDateStyles.bottomRight,
+    cornerDateStyles.bottomLeft,
+  );
 };
