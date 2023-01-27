@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { getWeekNumbersInMonth } from '../../utils';
-import { CalendarGridDayCell } from './CalendarGridDayCell';
+import { CalendarGridDayCell } from '../CalendarGridDayCell/CalendarGridDayCell';
 import { useCalendarGridRowStyles } from './useCalendarGridRowStyles';
-import type { CalendarDayGridProps, DayInfo, WeekCorners } from './CalendarDayGrid.types';
+import type { CalendarDayGridProps, DayInfo, WeekCorners } from '../CalendarDayGrid/CalendarDayGrid.types';
+import { mergeClasses } from '@griffel/react';
 
 export interface CalendarGridRowProps extends CalendarDayGridProps {
   weeks: DayInfo[][];
@@ -40,10 +41,10 @@ export const CalendarGridRow: React.FunctionComponent<CalendarGridRowProps> = pr
     ? strings.weekNumberFormatString && strings.weekNumberFormatString.replace('{0}', `${weekNumbers[weekIndex]}`)
     : '';
 
-  const { weekNumberCell } = useCalendarGridRowStyles();
+  const { weekNumberCell, gridRow } = useCalendarGridRowStyles();
 
   return (
-    <tr role={ariaRole} className={rowClassName} key={weekIndex + '_' + week[0].key}>
+    <tr role={ariaRole} className={mergeClasses(gridRow, rowClassName)} key={weekIndex + '_' + week[0].key}>
       {showWeekNumbers && weekNumbers && (
         <th className={weekNumberCell} key={weekIndex} title={titleString} aria-label={titleString} scope="row">
           <span>{weekNumbers[weekIndex]}</span>

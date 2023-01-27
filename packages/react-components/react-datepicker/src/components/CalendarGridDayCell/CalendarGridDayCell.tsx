@@ -3,12 +3,11 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Enter } from '@fluentui/keyb
 import { getRTLSafeKey } from '@fluentui/react-utilities';
 import { useFluent_unstable } from '@fluentui/react-shared-contexts';
 import { mergeClasses } from '@griffel/react';
-import { addDays, addWeeks, compareDates, findAvailableDate, DateRangeType } from '../../utils';
-import type { AvailableDateOptions } from '../../utils';
-import type { DayInfo } from './CalendarDayGrid.types';
-import type { CalendarGridRowProps } from './CalendarGridRow';
+import { addDays, addWeeks, compareDates, findAvailableDate, DateRangeType, weekCornerClassNames } from '../../utils';
 import { useCalendarGridDayCellStyles } from './useCalendarGridDayCellStyles';
-import { weekCornerClassNames } from './useWeekCornerStyles';
+import type { AvailableDateOptions } from '../../utils';
+import type { DayInfo } from '../CalendarDayGrid/CalendarDayGrid.types';
+import type { CalendarGridRowProps } from '../CalendarDayGridRow/CalendarGridRow';
 
 export interface CalendarGridDayCellProps extends CalendarGridRowProps {
   day: DayInfo;
@@ -209,7 +208,6 @@ export const CalendarGridDayCell: React.FunctionComponent<CalendarGridDayCellPro
         classNames.dayCell,
         weekCorners && cornerStyle,
         day.isSelected && classNames.daySelected,
-        day.isSelected && 'ms-CalendarDay-daySelected',
         !day.isInBounds && classNames.dayOutsideBounds,
         !day.isInMonth && classNames.dayOutsideNavigatedMonth,
       )}
@@ -235,11 +233,7 @@ export const CalendarGridDayCell: React.FunctionComponent<CalendarGridDayCellPro
       <button
         key={day.key + 'button'}
         aria-hidden={ariaHidden}
-        className={mergeClasses(
-          classNames.dayButton,
-          day.isToday && classNames.dayIsToday,
-          day.isToday && 'ms-CalendarDay-dayIsToday',
-        )}
+        className={mergeClasses(classNames.dayButton, day.isToday && classNames.dayIsToday)}
         aria-label={ariaLabel}
         id={isNavigatedDate ? activeDescendantId : undefined}
         disabled={!ariaHidden && !day.isInBounds}

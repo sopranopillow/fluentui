@@ -1,8 +1,9 @@
 import { tokens } from '@fluentui/react-theme';
-import { makeStyles, shorthands } from '@griffel/react';
+import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 
-export type CalendarGridRowClassNames = {
-  weekNumberCell: 'fui-CalendarGridRow__weekNumberCell';
+export const calendarGridRowClassNames = {
+  gridRow: 'fui-CalendarGridRow',
+  weekNumberCell: 'fui-CalendarGridRow__weekNumberCell',
 };
 
 const useWeekNumberCellStyles = makeStyles({
@@ -25,6 +26,7 @@ export const useCalendarGridRowStyles = () => {
   const weekNumberCellStyles = useWeekNumberCellStyles();
 
   return {
-    weekNumberCell: weekNumberCellStyles.base,
+    weekNumberCell: mergeClasses(calendarGridRowClassNames.weekNumberCell, weekNumberCellStyles.base),
+    gridRow: mergeClasses(calendarGridRowClassNames.gridRow, ''),
   };
 };

@@ -2,7 +2,7 @@ import { useFluent_unstable } from '@fluentui/react-shared-contexts';
 import { tokens } from '@fluentui/react-theme';
 import { makeStyles, shorthands } from '@griffel/react';
 import { DateRangeType, getDateRangeArray } from '../../utils';
-import { CalendarDayGridProps, DayInfo, WeekCorners } from './CalendarDayGrid.types';
+import { CalendarDayGridProps, DayInfo, WeekCorners } from '../../components/CalendarDayGrid/CalendarDayGrid.types';
 
 export const weekCornerClassNames = {
   datesAbove: 'fui-CalendarGridDayCell__datesAbove',

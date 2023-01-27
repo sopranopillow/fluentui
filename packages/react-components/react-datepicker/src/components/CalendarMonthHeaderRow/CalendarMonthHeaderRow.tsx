@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { mergeClasses } from '@griffel/react';
 import { DAYS_IN_WEEK } from '../../utils';
-import type { CalendarDayGridProps } from './CalendarDayGrid.types';
-import type { DayInfo } from './CalendarDayGrid.types';
-import { calendarGridDayCellClassNames } from './useCalendarGridDayCellStyles';
+import type { CalendarDayGridProps } from '../CalendarDayGrid/CalendarDayGrid.types';
+import type { DayInfo } from '../CalendarDayGrid/CalendarDayGrid.types';
+import { calendarGridDayCellClassNames } from '../CalendarGridDayCell/useCalendarGridDayCellStyles';
 import { useCalendarMonthHeaderRowStyles_unstable } from './useCalendarMonthHeaderRowStyles';
 
 export interface CalendarDayMonthHeaderRowProps extends CalendarDayGridProps {

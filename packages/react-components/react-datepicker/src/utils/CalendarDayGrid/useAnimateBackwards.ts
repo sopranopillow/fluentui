@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useRefEffect } from '../../temp-utils/useRefEffect';
-import { DayInfo } from './CalendarDayGrid.types';
+import { DayInfo } from '../../components/CalendarDayGrid/CalendarDayGrid.types';
 
 /**
  * Hook to determine whether to animate the CalendarDayGrid forwards or backwards

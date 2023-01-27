@@ -1,15 +1,24 @@
 import * as React from 'react';
 import { getNativeElementProps, resolveShorthand, useId } from '@fluentui/react-utilities';
-import type { DayInfo, CalendarDayGridProps, CalendarDayGridState, WeekCorners } from './CalendarDayGrid.types';
-import { useDayRefs } from './useDayRefs';
-import { useWeeks } from './useWeeks';
-import { DateRangeType, DayOfWeek, getBoundedDateRange, getDateRangeArray, isRestrictedDate } from '../../utils';
-import { useAnimateBackwards } from './useAnimateBackwards';
-import { useWeekCornerStyles } from './useWeekCornerStyles';
+import {
+  DateRangeType,
+  DayOfWeek,
+  getBoundedDateRange,
+  getDateRangeArray,
+  isRestrictedDate,
+  useAnimateBackwards,
+  useWeekCornerStyles,
+  useDayRefs,
+  useWeeks,
+} from '../../utils';
 import { useArrowNavigationGroup } from '@fluentui/react-tabster';
 import { AnimationDirection } from '../Calendar/Calendar.types';
-import { CalendarMonthHeaderRow, CalendarDayMonthHeaderRowProps } from './CalendarMonthHeaderRow';
-import { CalendarGridRow, CalendarGridRowProps } from './CalendarGridRow';
+import {
+  CalendarMonthHeaderRow,
+  CalendarDayMonthHeaderRowProps,
+} from '../CalendarMonthHeaderRow/CalendarMonthHeaderRow';
+import { CalendarGridRow, CalendarGridRowProps } from '../CalendarDayGridRow/CalendarGridRow';
+import type { DayInfo, CalendarDayGridProps, CalendarDayGridState, WeekCorners } from './CalendarDayGrid.types';
 
 /**
  * Create the state required to render CalendarDayGrid.
@@ -173,8 +182,8 @@ export const useCalendarDayGrid_unstable = (
       defaultProps: {
         ...props,
         ...partialWeekProps,
-        week: weeks[0],
-        weekIndex: -1,
+        week: weeks[weeks.length - 1],
+        weekIndex: -2,
         ariaRole: 'presentation',
         ariaHidden: true,
       },

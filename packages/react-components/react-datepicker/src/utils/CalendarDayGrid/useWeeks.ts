@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { compareDates, DAYS_IN_WEEK, getDayGrid } from '../../utils';
-import { CalendarDayGridProps, DayInfo } from './CalendarDayGrid.types';
+import { compareDates, DAYS_IN_WEEK, getDayGrid } from '..';
+import { CalendarDayGridProps, DayInfo } from '../../components/CalendarDayGrid/CalendarDayGrid.types';
 
 export function useWeeks(
   props: CalendarDayGridProps,

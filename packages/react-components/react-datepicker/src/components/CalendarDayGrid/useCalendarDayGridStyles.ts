@@ -1,15 +1,20 @@
-import { SlotClassNames } from '@fluentui/react-utilities';
-import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 import { AnimationDirection } from '../Calendar/Calendar.types';
-import { CalendarDayGridSlots, CalendarDayGridState } from './CalendarDayGrid.types';
+import { makeStyles, mergeClasses, shorthands } from '@griffel/react';
 import {
   DURATION_3,
   EASING_FUNCTION_1,
+  FADE_IN,
   FADE_OUT,
+  SLIDE_DOWN_IN20,
   SLIDE_DOWN_OUT20,
+  SLIDE_LEFT_IN20,
+  SLIDE_RIGHT_IN20,
+  SLIDE_UP_IN20,
   SLIDE_UP_OUT20,
   TRANSITION_ROW_DISAPPEARANCE,
 } from '../../utils';
+import type { CalendarDayGridSlots, CalendarDayGridState } from './CalendarDayGrid.types';
+import type { SlotClassNames } from '@fluentui/react-utilities';
 
 export const calendarDayGridClassNames: SlotClassNames<CalendarDayGridSlots> = {
   root: 'fui-CalendarDayGrid',
@@ -21,8 +26,6 @@ export const calendarDayGridClassNames: SlotClassNames<CalendarDayGridSlots> = {
 
 export const extraCalendarDayGridClassNames = {
   calendarGridRow: 'fui-CalendarDayGrid__calendarGridRow',
-  hover: 'fui-CalendarDayGrid__hover',
-  pressed: 'fui-CalendarDayGrid__pressed',
   dayIsToday: 'fui-CalendarDayGrid__dayIsToday',
   daySelected: 'fui-CalendarDayGrid__daySelected',
 };
@@ -77,6 +80,26 @@ const useLastTransitionWeekStyles = makeStyles({
   },
 });
 
+const useWeekRowStyles = makeStyles({
+  base: {
+    animationDuration: DURATION_3,
+    animationFillMode: 'both',
+    animationTimingFunction: EASING_FUNCTION_1,
+  },
+  horizontalBackward: {
+    animationName: [FADE_IN, SLIDE_RIGHT_IN20],
+  },
+  horizontalForward: {
+    animationName: [FADE_IN, SLIDE_LEFT_IN20],
+  },
+  verticalBackward: {
+    animationName: [FADE_IN, SLIDE_DOWN_IN20],
+  },
+  verticalForward: {
+    animationName: [FADE_IN, SLIDE_UP_IN20],
+  },
+});
+
 /**
  * Apply styling to the CalendarDayGrid slots based on the state
  */
@@ -84,6 +107,7 @@ export const useCalendarDayGridStyles_unstable = (state: CalendarDayGridState): 
   const tableStyles = useTableStyles();
   const firstTransitionWeekStyles = useFirstTransitionWeekStyles();
   const lastTransitionWeekStyles = useLastTransitionWeekStyles();
+  const weekRowStyles = useWeekRowStyles();
 
   const { animateBackwards, animationDirection, showWeekNumbers } = state;
 
@@ -116,6 +140,16 @@ export const useCalendarDayGridStyles_unstable = (state: CalendarDayGridState): 
       lastTransitionWeekStyles.verticalBackward,
     state.lastCalendarGridRow.className,
   );
-
+  state.weekRowClassName = mergeClasses(
+    animateBackwards !== undefined && weekRowStyles.base,
+    animateBackwards !== undefined &&
+      (animationDirection === AnimationDirection.Horizontal
+        ? animateBackwards
+          ? weekRowStyles.horizontalBackward
+          : weekRowStyles.horizontalForward
+        : animateBackwards
+        ? weekRowStyles.verticalBackward
+        : weekRowStyles.verticalForward),
+  );
   return state;
 };

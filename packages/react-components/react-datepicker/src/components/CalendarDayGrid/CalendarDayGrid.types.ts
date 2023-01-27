@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { AnimationDirection } from '../Calendar/Calendar.types';
 import { DayOfWeek, FirstWeekOfYear, DateRangeType, Day } from '../../utils';
-import type { CalendarDayMonthHeaderRowProps } from './CalendarMonthHeaderRow';
+import type { CalendarDayMonthHeaderRowProps } from '../CalendarMonthHeaderRow/CalendarMonthHeaderRow';
 import type { ComponentProps, ComponentState, Slot } from '@fluentui/react-utilities';
 import type { IBaseProps } from '@fluentui/utilities';
 import type { CalendarStrings, DateFormatting, DayGridOptions } from '../../utils';
-import type { CalendarGridRowProps } from './CalendarGridRow';
+import type { CalendarGridRowProps } from '../CalendarDayGridRow/CalendarGridRow';
 
 export type CalendarDayGridSlots = {
   root: NonNullable<Slot<'tbody'>>;
@@ -25,7 +25,7 @@ export type CalendarDayGridState = ComponentState<CalendarDayGridSlots> &
     >
   > & {
     animateBackwards?: boolean;
-    calendarGridRow?: string;
+    weekRowClassName?: string;
     middleWeeks: DayInfo[][];
     middleWeekProps: Omit<CalendarGridRowProps, 'week' | 'weekIndex' | 'rowClassName'>;
   };
@@ -129,7 +129,7 @@ export type SharedCalendarDayGridProps = {
    * Ref callback for individual days. Allows for customization of the styling, properties, or listeners of the
    * specific day.
    */
-  customDayCellRef?: (element: HTMLElement, date: Date) => void;
+  customDayCellRef?: (element: HTMLElement, date: Date) => void; //TODO: check if this should be updated
 
   /**
    * How many weeks to show by default. If not provided, will show enough weeks to display the current

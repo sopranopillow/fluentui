@@ -2,7 +2,7 @@ import { tokens } from '@fluentui/react-theme';
 import { shorthands, makeStyles } from '@griffel/react';
 import { DateRangeType } from '../../utils';
 import { CalendarGridDayCellProps } from './CalendarGridDayCell';
-import { extraCalendarDayGridClassNames } from './useCalendarDayGridStyles';
+import { extraCalendarDayGridClassNames } from '../CalendarDayGrid/useCalendarDayGridStyles';
 
 export const calendarGridDayCellClassNames: Record<string, string> = {
   dayCell: 'fui-CalendarGridDayCell__dayCell',
@@ -88,7 +88,7 @@ const useDayCellStyles = makeStyles({
       zIndex: 0,
     },
 
-    [`&.${extraCalendarDayGridClassNames.hover}`]: {
+    '&:hover': {
       backgroundColor: tokens.colorNeutralBackground1Hover,
       '@media (forced-colors: active)': {
         backgroundColor: 'Window',
@@ -97,7 +97,7 @@ const useDayCellStyles = makeStyles({
       },
     },
 
-    [`&.${extraCalendarDayGridClassNames.pressed}`]: {
+    '&:active': {
       backgroundColor: tokens.colorNeutralBackground1Pressed,
       '@media (forced-colors: active)': {
         backgroundColor: 'Window',
@@ -106,7 +106,7 @@ const useDayCellStyles = makeStyles({
       },
     },
 
-    [`&.${extraCalendarDayGridClassNames.pressed}.${extraCalendarDayGridClassNames.hover}`]: {
+    '&:hover:active': {
       '@media (forced-colors: active)': {
         backgroundColor: 'Window',
         ...shorthands.outline('1px', 'solid', 'Highlight'),
@@ -129,7 +129,7 @@ const useDaySelectedStyles = makeStyles({
       top: 0,
     },
 
-    [`&:hover, &.${extraCalendarDayGridClassNames.hover}, &.${extraCalendarDayGridClassNames.pressed}`]: {
+    [`&:hover,&:active`]: {
       backgroundColor: tokens.colorNeutralBackground1Selected + ' !important',
       '@media (forced-colors: active)': {
         backgroundColor: 'Highlight!important',
