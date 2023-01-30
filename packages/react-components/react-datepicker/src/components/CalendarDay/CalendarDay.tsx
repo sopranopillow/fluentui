@@ -37,6 +37,7 @@ export const CalendarDay: React.FunctionComponent<CalendarDayProps> = props => {
     dateRangeType,
     animationDirection,
   } = props;
+
   const monthAndYearId = useId();
 
   const classNames = useCalendarDayStyles_unstable({

@@ -187,14 +187,6 @@ const useCornerDateStyles = makeStyles({
   },
 });
 
-// datesAbove: 'fui-CalendarGridDayCell__datesAbove',
-// datesBelow: 'fui-CalendarGridDayCell__datesBelow',
-// datesLeft: 'fui-CalendarGridDayCell__datesLeft',
-// datesRight: 'fui-CalendarGridDayCell__datesRight',
-// topRightCornerDate: 'fui-CalendarGridDayCell__topRightCornerDate',
-// topLeftCornerDate: 'fui-CalendarGridDayCell__topLeftCornerDate',
-// bottomRightCornerDate: 'fui-CalendarGridDayCell__bottomRightCornerDate',
-// bottomLeftCornerDate: 'fui-CalendarGridDayCell__bottomLeftCornerDate',
 const useDatesPositionStyles = makeStyles({
   above: {
     [`&.${weekCornerClassNames.datesAbove}`]: {

@@ -27,6 +27,6 @@ export const useCalendarGridRowStyles = () => {
 
   return {
     weekNumberCell: mergeClasses(calendarGridRowClassNames.weekNumberCell, weekNumberCellStyles.base),
-    gridRow: mergeClasses(calendarGridRowClassNames.gridRow, ''),
+    gridRow: calendarGridRowClassNames.gridRow,
   };
 };

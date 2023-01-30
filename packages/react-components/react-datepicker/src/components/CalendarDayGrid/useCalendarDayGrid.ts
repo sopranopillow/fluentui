@@ -53,7 +53,8 @@ export const useCalendarDayGrid_unstable = (
 
   const [daysRef, getSetRefCallback] = useDayRefs();
 
-  const weeks = useWeeks(props as CalendarDayGridProps, onSelectDate, getSetRefCallback);
+  const weeks = useWeeks(props, onSelectDate, getSetRefCallback);
+  console.log(weeks);
   const animateBackwards = useAnimateBackwards(weeks);
   const [getWeekCornerStyles, calculateRoundedStyles] = useWeekCornerStyles(props);
 
@@ -131,10 +132,10 @@ export const useCalendarDayGrid_unstable = (
     dateRangeType,
     lightenDaysOutsideNavigatedMonth,
     showWeekNumbers,
-    middleWeeks: weeks.slice(1, weeks.length - 1),
+    middleWeeks: weeks.slice(1, -1),
     middleWeekProps: {
-      ...partialWeekProps,
       ...props,
+      ...partialWeekProps,
     },
 
     components: {

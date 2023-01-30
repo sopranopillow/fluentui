@@ -193,11 +193,11 @@ export const useCalendarGridDayCellStyles = (props: CalendarGridDayCellProps) =>
 
   return {
     dayCell: mergeClasses(dayCellStyles.base, weekCornerStyles),
-    daySelected: dateRangeType !== DateRangeType.Month ? daySelectedStyles.dateRangeTypeNotMonth : '',
+    daySelected: dateRangeType !== DateRangeType.Month && daySelectedStyles.dateRangeTypeNotMonth,
     dayOutsideBounds: dayOutsideBoundsStyles.base,
-    dayOutsideNavigatedMonth: lightenDaysOutsideNavigatedMonth
-      ? dayOutsideNavigatedMonthStyles.lightenDaysOutsideNavigatedMonth
-      : '',
+    dayOutsideNavigatedMonth:
+      (lightenDaysOutsideNavigatedMonth === undefined || lightenDaysOutsideNavigatedMonth) &&
+      dayOutsideNavigatedMonthStyles.lightenDaysOutsideNavigatedMonth,
     dayButton: dayButtonStyles.base,
     dayIsToday: dayIsTodayStyles.base,
     dayMarker: dayMarkerStyles.base,

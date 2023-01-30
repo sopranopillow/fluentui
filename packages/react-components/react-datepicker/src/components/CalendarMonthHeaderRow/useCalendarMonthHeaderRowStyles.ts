@@ -7,6 +7,7 @@ const useWeekDayLabelCellStyles = makeStyles({
     animationFillMode: 'both',
     animationName: FADE_IN,
     animationTimingFunction: EASING_FUNCTION_2,
+    fontWeight: 'normal',
   },
 });
 

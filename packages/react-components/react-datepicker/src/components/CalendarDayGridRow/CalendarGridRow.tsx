@@ -11,7 +11,6 @@ export interface CalendarGridRowProps extends CalendarDayGridProps {
   weekIndex: number;
   weekCorners?: WeekCorners;
   ariaHidden?: boolean;
-  rowClassName?: string;
   ariaRole?: string;
   navigatedDayRef: React.MutableRefObject<HTMLTableCellElement>;
   activeDescendantId: string;
@@ -25,13 +24,13 @@ export const CalendarGridRow: React.FunctionComponent<CalendarGridRowProps> = pr
     week,
     weeks,
     weekIndex,
-    rowClassName,
     ariaRole,
     showWeekNumbers,
     firstDayOfWeek,
     firstWeekOfYear,
     navigatedDate,
     strings,
+    className,
   } = props;
   const weekNumbers = showWeekNumbers
     ? getWeekNumbersInMonth(weeks!.length, firstDayOfWeek, firstWeekOfYear, navigatedDate)
@@ -44,7 +43,7 @@ export const CalendarGridRow: React.FunctionComponent<CalendarGridRowProps> = pr
   const { weekNumberCell, gridRow } = useCalendarGridRowStyles();
 
   return (
-    <tr role={ariaRole} className={mergeClasses(gridRow, rowClassName)} key={weekIndex + '_' + week[0].key}>
+    <tr role={ariaRole} className={mergeClasses(gridRow, className)} key={weekIndex + '_' + week[0].key}>
       {showWeekNumbers && weekNumbers && (
         <th className={weekNumberCell} key={weekIndex} title={titleString} aria-label={titleString} scope="row">
           <span>{weekNumbers[weekIndex]}</span>

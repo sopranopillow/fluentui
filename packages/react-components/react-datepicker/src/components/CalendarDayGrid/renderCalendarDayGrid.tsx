@@ -18,7 +18,7 @@ export const renderCalendarDayGrid_unstable = (state: CalendarDayGridState) => {
         {middleWeeks.map((week: DayInfo[], weekIndex: number) => (
           <CalendarGridRow
             {...middleWeekProps}
-            rowClassName={weekRowClassName}
+            className={weekRowClassName}
             key={weekIndex}
             week={week}
             weekIndex={weekIndex}

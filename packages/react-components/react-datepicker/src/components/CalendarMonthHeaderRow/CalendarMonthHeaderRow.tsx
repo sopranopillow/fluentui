@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { mergeClasses } from '@griffel/react';
 import { DAYS_IN_WEEK } from '../../utils';
-import type { CalendarDayGridProps } from '../CalendarDayGrid/CalendarDayGrid.types';
-import type { DayInfo } from '../CalendarDayGrid/CalendarDayGrid.types';
-import { calendarGridDayCellClassNames } from '../CalendarGridDayCell/useCalendarGridDayCellStyles';
-import { useCalendarMonthHeaderRowStyles_unstable } from './useCalendarMonthHeaderRowStyles';
+import type { CalendarDayGridProps } from '../CalendarDayGrid';
+import type { DayInfo } from '../CalendarDayGrid';
+import { useCalendarMonthHeaderRowStyles_unstable } from '../CalendarMonthHeaderRow/useCalendarMonthHeaderRowStyles';
 
 export interface CalendarDayMonthHeaderRowProps extends CalendarDayGridProps {
   //TODO: rename this to CalendarMonthHeaderRowProps
@@ -33,13 +32,13 @@ export const CalendarMonthHeaderRow: React.FunctionComponent<CalendarDayMonthHea
 
   return (
     <tr>
-      {showWeekNumbers && <th className={calendarGridDayCellClassNames.dayCell} />}
+      {showWeekNumbers && <th className={classNames.dayCell} />}
       {dayLabels.map((val: string, index: number) => {
         const i = (index + firstDayOfWeek) % DAYS_IN_WEEK;
         const label = strings.days[i];
         return (
           <th
-            className={mergeClasses(calendarGridDayCellClassNames.dayCell, classNames.weekDayLabelCell)}
+            className={mergeClasses(classNames.dayCell, classNames.weekDayLabelCell)}
             scope="col"
             key={dayLabels[i] + ' ' + index}
             title={label}
