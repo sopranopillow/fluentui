@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "api files",
+  "packageName": "@fluentui/react-slider",
+  "email": "esteban.230@hotmail.com",
+  "dependentChangeType": "patch"
+}

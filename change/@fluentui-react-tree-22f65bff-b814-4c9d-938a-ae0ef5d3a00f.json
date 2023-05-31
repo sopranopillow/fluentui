@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "api files",
+  "packageName": "@fluentui/react-tree",
+  "email": "esteban.230@hotmail.com",
+  "dependentChangeType": "patch"
+}

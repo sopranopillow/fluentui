@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "api files",
+  "packageName": "@fluentui/react-theme",
+  "email": "esteban.230@hotmail.com",
+  "dependentChangeType": "patch"
+}

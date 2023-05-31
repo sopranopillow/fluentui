@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "test",
+  "packageName": "@fluentui/react-migration-v8-v9",
+  "email": "esteban.230@hotmail.com",
+  "dependentChangeType": "patch"
+}
