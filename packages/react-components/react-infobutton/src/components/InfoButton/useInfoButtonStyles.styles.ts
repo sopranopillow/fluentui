@@ -97,6 +97,11 @@ const useButtonStyles = makeStyles({
 const usePopoverSurfaceStyles = makeStyles({
   smallMedium: typographyStyles.caption1,
   large: typographyStyles.body1,
+  base: {
+    // Since we render the Popover inline and Input uses position: relative, we need to set a zIndex. If we don't,
+    // the Popover surface will render behind the input. See #27891 for more details.
+    zIndex: '1',
+  },
 });
 
 /**
@@ -110,7 +115,7 @@ export const useInfoButtonStyles_unstable = (state: InfoButtonState): InfoButton
 
   state.info.className = mergeClasses(
     infoButtonClassNames.info,
-    size === 'large' && popoverSurfaceStyles.large,
+    size === 'large' ? popoverSurfaceStyles.large : popoverSurfaceStyles.smallMedium,
     state.info.className,
   );
 
