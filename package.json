@@ -61,7 +61,7 @@
     "@dnd-kit/utilities": "^3.2.1",
     "@floating-ui/dom": "1.6.12",
     "@fluentui/react-icons": "^2.0.245",
-    "@griffel/babel-preset": "1.5.8",
+    "@griffel/babel-preset": "1.6.6",
     "@griffel/eslint-plugin": "^1.6.4",
     "@griffel/jest-serializer": "1.1.24",
     "@griffel/react": "^1.5.22",
