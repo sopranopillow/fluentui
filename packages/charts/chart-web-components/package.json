@@ -94,7 +94,7 @@
     "@tensile-perf/web-components": "~0.2.0",
     "@storybook/html": "7.6.20",
     "@storybook/html-webpack5": "7.6.20",
-    "chromedriver": "^125.0.0"
+    "chromedriver": "^135.0.0"
   },
   "dependencies": {
     "@microsoft/fast-web-utilities": "^6.0.0",
