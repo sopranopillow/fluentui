@@ -315,7 +315,7 @@
     "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-terser": "5.3.1",
     "rollup-plugin-transform-tagged-template": "0.0.3",
-    "sass": "1.49.11",
+    "sass": "1.89.1",
     "sass-loader": "12.4.0",
     "satisfied": "^1.1.1",
     "scheduler": "0.20.2",
